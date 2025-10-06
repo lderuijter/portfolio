@@ -4,6 +4,7 @@ body.dark {
     --bg-light: hsl(0 0% 10%);
     --text: hsl(0 0% 95%);
     --text-muted: hsl(0 0% 70%);
+    --button-color: hsl(0, 58%, 51%);
 }
 
 body.light {
@@ -12,9 +13,23 @@ body.light {
     --bg-light: hsl(0 0% 100%);
     --text: hsl(0 0% 5%);
     --text-muted: hsl(0 0% 30%);
+    --button-color: hsl(208, 89%, 44%);
 }
 
 body {
     background-color: var(--bg);
     color: var(--text);
+}
+
+nav {
+    text-align: center;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
 }
