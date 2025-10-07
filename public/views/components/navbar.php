@@ -19,7 +19,10 @@ $themeState = $theme === 'light' ? 'checked' : '';
 <div class="container">
     <div class="navbar">
         <div class="nav-item logo">
-            <a href="./home">Logo</a>
+            <a href="#">Logo</a>
+        </div>
+        <div class="nav-item">
+            <a href="./home">Home</a>
         </div>
         <div class="nav-item">
             <a href="./projects">Projects</a>
