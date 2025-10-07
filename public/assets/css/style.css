@@ -2,6 +2,7 @@ body.dark {
     --bg-dark: hsl(0 0% 0%);
     --bg: hsl(0 0% 5%);
     --bg-light: hsl(0 0% 10%);
+    --navbar-color: hsl(0, 0%, 20%);
     --text: hsl(0 0% 95%);
     --text-muted: hsl(0 0% 70%);
     --button-color: hsl(0, 58%, 51%);
@@ -11,6 +12,7 @@ body.light {
     --bg-dark: hsl(0 0% 90%);
     --bg: hsl(0 0% 95%);
     --bg-light: hsl(0 0% 100%);
+    --navbar-color: hsl(0, 0%, 75%);
     --text: hsl(0 0% 5%);
     --text-muted: hsl(0 0% 30%);
     --button-color: hsl(208, 89%, 44%);
@@ -21,8 +23,17 @@ body {
     color: var(--text);
 }
 
+/* Navbar left vertical, body right (navbar responsive burger menu) */
+.container {
+    display: flex;
+}
+
 nav {
     text-align: center;
+}
+
+.navbar {
+    background-color: var(--navbar-color);
 }
 
 main {
