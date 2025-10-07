@@ -1,8 +1,14 @@
 <?php
-if (isset($_GET['theme'])) {
-    $_SESSION['theme'] = $_GET['theme'];
+if (isset($_POST['theme'])) {
+    $_SESSION['theme'] = $_POST['theme'];
 }
 $theme = isset($_SESSION['theme']) ? $_SESSION['theme'] : 'dark';
+
+if (!isset($_SESSION['theme'])) {
+    $_SESSION['theme'] = $theme;
+}
+
+$themeState = $theme === 'light' ? 'checked' : '';
 ?>
 
 <!DOCTYPE html>
@@ -13,7 +19,7 @@ $theme = isset($_SESSION['theme']) ? $_SESSION['theme'] : 'dark';
     <link rel="stylesheet" href="assets/css/style.css">
     <script src="assets/js/script.js" defer></script>
 </head>
-<body class="<?= $theme === 'light' ? 'light' : 'dark' ?>">
+<body class="<?= $theme ?>">
 <div class="container">
     <div class="navbar">
         <div class="nav-item logo">
@@ -37,10 +43,12 @@ $theme = isset($_SESSION['theme']) ? $_SESSION['theme'] : 'dark';
         <br>
 
         <?php if (isset($title) && $title !== '404'): ?>
-            <form class="themeForm" method="GET">
-                <input type="hidden" name="theme" class="themeInput">
-            </form>
-            <button onclick="toggleTheme()">Toggle theme</button>
+            <div class="toggle-slider-theme">
+                <input type="checkbox" id="theme-toggle" class="theme-toggle" <?= $themeState ?> >
+                <label for="theme-toggle">
+                    <span class="thumb"></span>
+                </label>
+            </div>
         <?php endif; ?>
     </main>
 </div>

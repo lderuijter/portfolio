@@ -52,7 +52,7 @@ body {
     border-radius: 20px;
 }
 
-.nav-item a {
+.nav-item > a {
     font-size: 1.2rem;
     color: var(--navbar-text);
     width: inherit;
@@ -67,4 +67,47 @@ main {
     align-items: center;
     height: 100vh;
     width: 100%;
+}
+
+.toggle-slider-theme {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.toggle-slider-theme > label {
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+    background-color: #ccc;
+    border-radius: 30px;
+    position: relative;
+    cursor: pointer;
+}
+
+.thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 26px;
+    height: 26px;
+    background-color: #fff;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.theme-toggle {
+    display: none;
+}
+
+.theme-toggle + label {
+    background-color: hsl(0, 58%, 51%);
+}
+
+.theme-toggle:checked + label {
+    background-color: hsl(211, 92%, 56%);
+}
+
+.theme-toggle:checked + label .thumb {
+    transform: translateX(30px);
 }
