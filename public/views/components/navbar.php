@@ -2,12 +2,8 @@
 if (isset($_POST['theme'])) {
     $_SESSION['theme'] = $_POST['theme'];
 }
+
 $theme = isset($_SESSION['theme']) ? $_SESSION['theme'] : 'dark';
-
-if (!isset($_SESSION['theme'])) {
-    $_SESSION['theme'] = $theme;
-}
-
 $themeState = $theme === 'light' ? 'checked' : '';
 ?>
 
