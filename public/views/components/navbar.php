@@ -16,11 +16,15 @@ $theme = isset($_SESSION['theme']) ? $_SESSION['theme'] : 'dark';
 <body class="<?= $theme === 'light' ? 'light' : 'dark' ?>">
 <div class="container">
     <div class="navbar">
-        <nav>
-            <a href="./home">Home</a>
+        <div class="nav-item logo">
+            <a href="./home">Logo</a>
+        </div>
+        <div class="nav-item">
             <a href="./projects">Projects</a>
+        </div>
+        <div class="nav-item">
             <a href="./contact">Contact</a>
-        </nav>
+        </div>
     </div>
 
     <main>
