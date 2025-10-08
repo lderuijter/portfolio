@@ -20,3 +20,16 @@ themeToggle.addEventListener('change', () => {
         // Als er een fout is, log het naar de console
         .catch(err => console.error(err));
 });
+
+// Haal de burger button op via de class
+const burger = document.querySelector('.burger');
+// Haal de nav links div op via de class
+const navLinks = document.querySelector('.nav-links');
+
+// Luisteren voor clicks op de burger button
+burger.addEventListener('click', () => {
+    // Maak de burger button active of niet active
+    burger.classList.toggle('active');
+    // Laat de navigatie links zien of verbergen
+    navLinks.classList.toggle('show');
+});
