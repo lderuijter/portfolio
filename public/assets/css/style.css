@@ -1,13 +1,16 @@
+/* Basic reset voor de hele page */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+/* Root variabelen */
 :root {
     --white-text: hsl(0 0% 95%);
 }
 
+/* Dark theme variabelen */
 body.dark {
     --bg-dark: hsl(0 0% 0%);
     --bg: hsl(0 0% 5%);
@@ -18,6 +21,7 @@ body.dark {
     --button-color: hsl(0, 58%, 51%);
 }
 
+/* Light theme variabelen */
 body.light {
     --bg-dark: hsl(0 0% 90%);
     --bg: hsl(0 0% 95%);
@@ -28,12 +32,14 @@ body.light {
     --button-color: hsl(211, 92%, 56%);
 }
 
+/* font, background en color voor de gehele body */
 body {
     font-family: 'Roboto', sans-serif;
     background-color: var(--bg);
     color: var(--text);
 }
 
+/* Nav section */
 .navbar {
     background-color: var(--navbar-color);
     display: flex;
@@ -60,6 +66,7 @@ body {
     text-decoration: none;
 }
 
+/* Main section (view) */
 main {
     display: flex;
     flex-direction: column;
@@ -69,6 +76,7 @@ main {
     width: 100%;
 }
 
+/* Toggle slider theme section */
 .toggle-slider-theme {
     display: flex;
     justify-content: center;
@@ -112,6 +120,7 @@ main {
     transform: translateX(30px);
 }
 
+/* Footer section */
 .footer {
     position: fixed;
     bottom: 0;
