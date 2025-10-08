@@ -1,5 +1,11 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 :root {
-    --navbar-text: hsl(0 0% 95%);
+    --white-text: hsl(0 0% 95%);
 }
 
 body.dark {
@@ -26,12 +32,6 @@ body {
     font-family: 'Roboto', sans-serif;
     background-color: var(--bg);
     color: var(--text);
-    margin: 0;
-}
-
-/* Navbar left vertical, body right (navbar responsive burger menu) */
-.container {
-    display: flex;
 }
 
 .navbar {
@@ -54,7 +54,7 @@ body {
 
 .nav-item > a {
     font-size: 1.2rem;
-    color: var(--navbar-text);
+    color: var(--white-text);
     width: inherit;
     text-align: center;
     text-decoration: none;
@@ -110,4 +110,15 @@ main {
 
 .theme-toggle:checked + label .thumb {
     transform: translateX(30px);
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding: 10px 20px;
+    background-color: var(--button-color);
+    color: var(--white-text);
+    font-size: 14px;
+    border-top-left-radius: 8px;
 }

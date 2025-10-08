@@ -1,2 +1,1 @@
-<?php include 'components/navbar.php'; ?>
-<?php include 'components/footer.php'; ?>
+<h1>Projects page</h1>
