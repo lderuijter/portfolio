@@ -11,6 +11,9 @@ if (isset($_SESSION['theme'])) {
 <div class="toggle-slider-theme">
     <input type="checkbox" id="theme-toggle" class="theme-toggle" <?= $themeState ?> >
     <label for="theme-toggle">
-        <span class="thumb"></span>
+        <span class="thumb">
+            <i class="fa-solid fa-moon"></i>
+            <i class="fa-solid fa-sun"></i>
+        </span>
     </label>
 </div>

@@ -27,6 +27,8 @@ $_SESSION['theme'] = $theme;
     <title><?= isset($title) ? $title : 'Portfolio' ?></title>
     <!-- Gebruik base om de juiste css te pakken -->
     <link rel="stylesheet" href="<?= $base ?>assets/css/style.css">
+    <!-- Font Awesome inladen voor de icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <!-- Gebruik base om de juiste javascript te pakken -->
     <script src="<?= $base ?>assets/js/script.js" defer></script>
 </head>
