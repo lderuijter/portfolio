@@ -15,10 +15,8 @@ themeToggle.addEventListener('change', () => {
         method: 'POST',
         body: new URLSearchParams({theme}),
         credentials: 'same-origin'
-        // Doe een reload zodat het thema goed wordt opgeslagen in de sessie
-    }).then(() => location.reload())
         // Als er een fout is, log het naar de console
-        .catch(err => console.error(err));
+    }).catch(err => console.error(err));
 });
 
 // Haal de burger button op via de class
