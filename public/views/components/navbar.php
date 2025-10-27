@@ -14,5 +14,12 @@ $page = isset($_GET['page']) ? $_GET['page'] : 'home';
         <a class="<?= ($page === 'home') ? 'active' : '' ?>" href="<?= $base ?>home">Home</a>
         <a class="<?= ($page === 'projects') ? 'active' : '' ?>" href="<?= $base ?>projects">Projects</a>
         <a class="<?= ($page === 'contact') ? 'active' : '' ?>" href="<?= $base ?>contact">Contact</a>
+
+        <!-- Als je bent ingelogd moet hier logout komen te staan -->
+        <a class="<?= ($page === 'login') ? 'active' : '' ?>" href="<?= $base ?>login">Login</a>
+
+        <!-- Laat de create link alleen maar zien als de gebruiker is ingelogd -->
+        <a class="<?= ($page === 'createProject') ? 'active' : '' ?>" href="<?= $base ?>createProject">Create</a>
+
     </div>
 </div>

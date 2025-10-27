@@ -3,7 +3,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 
 $title = ucfirst($page);
 
-$validPages = ['home', 'projects', 'contact'];
+$validPages = ['home', 'projects', 'createProject', 'contact', 'login'];
 
 if (!in_array($page, $validPages)) {
     http_response_code(404);
