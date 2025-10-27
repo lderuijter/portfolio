@@ -1,0 +1,110 @@
+/* Nav section */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    width: 100px;
+}
+
+/* Burger button */
+.burger {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--navbar-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+/* burger drie strepen */
+.burger span {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 3px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* plaats de strepen in het midden */
+.burger span:nth-child(1) { top: 13px; }
+.burger span:nth-child(2) { top: 23px; }
+.burger span:nth-child(3) { top: 33px; }
+
+/* eerste streep draait 45 graden */
+.burger.active span:nth-child(1) {
+    top: 23px; /* verticaal in het midden */
+    transform: translateX(-50%) rotate(45deg);
+}
+
+/* tweede streep gaat weg */
+.burger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+/* derde streep draait 45 graden ander kant op, resultaat is X logo */
+.burger.active span:nth-child(3) {
+    top: 23px; /* verticaal in het midden */
+    transform: translateX(-50%) rotate(-45deg);
+}
+
+/* Nav links eerst doorzichtig */
+.nav-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    overflow: hidden;
+    max-width: 0;
+    opacity: 0;
+    transition: all 0.4s ease-in-out;
+}
+
+/* Expanded nav links niet meer doorzichtig dus normaal laten zien */
+.nav-links.show {
+    margin-top: 16px;
+    max-width: 500px;
+    opacity: 1;
+}
+
+/* nav links styling */
+.nav-links > a {
+    font-size: 18px;
+    color: var(--text);
+    text-decoration: none;
+    padding-bottom: 4px; /* ruimte voor de onderlijn */
+    display: inline-block;
+}
+
+/* onderlijn styling en animatie */
+.nav-links > a::after {
+    content: '';
+    display: block;
+    height: 5px;
+    width: 100%;
+    transform: scaleX(0);
+    background: var(--button-color);
+    border-radius: 5px;
+    transform-origin: center;
+    transition: transform 0.3s ease-in-out;
+    margin-top: 3px;
+}
+
+/* Hover and active effect */
+.nav-links > a:hover::after,
+.nav-links > a.active::after {
+    transform: scaleX(1);
+}

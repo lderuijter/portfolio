@@ -26,7 +26,10 @@ $_SESSION['theme'] = $theme;
     <!-- Pak de title uit de page.php afhankelijk van de pagina-->
     <title><?= isset($title) ? $title : 'Portfolio' ?></title>
     <!-- Gebruik base om de juiste css te pakken -->
-    <link rel="stylesheet" href="<?= $base ?>assets/css/style.css">
+    <link rel="stylesheet" href="<?= $base ?>assets/css/main.css">
+    <link rel="stylesheet" href="<?= $base ?>assets/css/navBurger.css">
+    <link rel="stylesheet" href="<?= $base ?>assets/css/themeSlider.css">
+    <link rel="stylesheet" href="<?= $base ?>assets/css/footer.css">
     <!-- Font Awesome inladen voor de icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <!-- Gebruik base om de juiste javascript te pakken -->

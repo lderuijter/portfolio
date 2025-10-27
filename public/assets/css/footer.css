@@ -1,0 +1,11 @@
+/* Footer section */
+.footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding: 10px 20px;
+    background-color: var(--button-color);
+    color: var(--white-text);
+    font-size: 14px;
+    border-top-left-radius: 8px;
+}

@@ -1,0 +1,55 @@
+/* Basic reset voor de hele page */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Root variabelen */
+:root {
+    --white-text: hsl(0 0% 95%);
+}
+
+/* Dark theme variabelen */
+body.dark {
+    --bg-dark: hsl(0 0% 0%);
+    --bg: hsl(0 0% 5%);
+    --bg-light: hsl(0 0% 10%);
+    --navbar-color: hsl(0, 0%, 20%);
+    --text: hsl(0 0% 95%);
+    --text-muted: hsl(0 0% 70%);
+    --button-color: hsl(0, 58%, 51%);
+}
+
+/* Light theme variabelen */
+body.light {
+    --bg-dark: hsl(0 0% 90%);
+    --bg: hsl(0 0% 95%);
+    --bg-light: hsl(0 0% 100%);
+    --navbar-color: hsl(0, 0%, 75%);
+    --text: hsl(0 0% 5%);
+    --text-muted: hsl(0 0% 30%);
+    --button-color: hsl(211, 92%, 56%);
+}
+
+/* font, background en color voor de gehele body */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+}
+
+/* Main section (view) */
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+}
+
+main > h1 {
+    font-size: 34px;
+    padding: 20px;
+}
