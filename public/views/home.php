@@ -35,13 +35,13 @@
     </div>
 </div>
 
-<h2>Projects preview</h2>
+<h2 class="project-preview-header">Projects preview</h2>
 
 <div class="project-preview-container">
-    <div class="preview-image">
+    <div class="preview-image project-1">
         <img src="https://lucasderuijter.vercel.app/public/generate-form.png" alt="preview-project">
     </div>
-    <div class="preview-image">
+    <div class="preview-image project-2">
         <img src="<?= $base ?>assets/images/ProjectCardAdmin.png" alt="preview-project">
     </div>
     <div class="preview-button">

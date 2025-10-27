@@ -1,6 +1,4 @@
 .page-heading {
-    position: fixed;
-    top: 30px;
     text-align: center;
     color: var(--text);
 }
@@ -8,7 +6,7 @@
 .about-me-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    gap: 50px;
     justify-items: center;
     align-items: center;
 }
@@ -16,7 +14,6 @@
 .lucas-image-container {
     display: flex;
     justify-content: end;
-    margin-right: 75px;
     width: 100%;
 }
 
@@ -35,11 +32,11 @@
     border-radius: 50%;
 }
 
-.about-me-text h2, p {
+.about-me-text h2, .about-me-text p {
     background-color: var(--text);
     color: var(--bg-dark);
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
 .about-me-text {
@@ -54,15 +51,15 @@
 }
 
 .about-me-text p {
-    font-style: italic;
-    font-size: 18px;
+    text-align: center;
+    font: italic 18px sans-serif;
 }
 
 .about-me-icons {
     display: flex;
     flex-direction: row;
     gap: 20px;
-    width: 90%;
+    width: 100%;
 }
 
 .about-me-icons a {
@@ -73,6 +70,10 @@
 .about-me-icons a img {
     width: 100%;
     height: 100%;
+}
+
+.project-preview-header {
+    margin-top: 20px;
 }
 
 .project-preview-container {
@@ -98,6 +99,10 @@
     scale: 1.10;
     transition: all 0.5s ease-in-out;
     cursor: pointer;
+    border: 4px solid transparent;
+    background-image: linear-gradient(var(--text)), linear-gradient(var(--button-color) 75%, #9951bd);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
 }
 
 .preview-image img {
@@ -130,4 +135,67 @@
     cursor: pointer;
     text-decoration: underline;
     padding: 0;
+}
+
+@media (max-width: 992px) {
+    .about-me-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        justify-items: center;
+        align-items: center;
+    }
+
+    .about-me-text p {
+        width: min(90%, 300px);
+    }
+
+    .project-preview-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .project-2 {
+        display: none;
+    }
+
+    .logo, .about-me-icons {
+        display: none;
+    }
+}
+
+@media (max-width: 692px) {
+    .toggle-slider-theme {
+        position: fixed;
+        top: 30px;
+        left: 0;
+        transform: translateX(calc(100vw - 75px));
+    }
+
+    .about-me-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+        justify-items: center;
+        align-items: center;
+    }
+
+    .lucas-image-container {
+        display: flex;
+        justify-content: center;
+        margin-right: 0;
+    }
+
+    .project-1 {
+        display: none;
+    }
+
+    .project-preview-container {
+        grid-template-columns: 1fr;
+        margin-top: 25px;
+        margin-bottom: 120px;
+    }
+
+    .footer {
+        display: none;
+    }
 }

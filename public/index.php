@@ -23,6 +23,7 @@ $_SESSION['theme'] = $theme;
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Pak de title uit de page.php afhankelijk van de pagina-->
     <title><?= isset($title) ? $title : 'Portfolio' ?></title>
 

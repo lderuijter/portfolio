@@ -20,8 +20,3 @@
     margin-right: 8px;
     margin-top: -8px;
 }
-
-/* Logo verbergen op kleinere schermen */
-.hide {
-    display: none;
-}
