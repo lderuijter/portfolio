@@ -1,7 +1,14 @@
 <?php
-// de base variabele wordt altijd opgehaald uit de config.php
-/** @var $base */
-require_once __DIR__ . '/config.php';
+// gebruikte protocol ophalen
+$protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://';
+// domein ophalen
+$host = $_SERVER['HTTP_HOST'];
+// de juiste directory ophalen na de slash
+$scriptDir = dirname($_SERVER['SCRIPT_NAME']); // e.g., /portfolio
+// constant base path aanmaken voor require_once
+define('BASE_PATH', dirname(__FILE__));
+// constant base url aanmaken voor href en src
+define('BASE_URL', $protocol . $host . $scriptDir . '/');
 
 // session starten
 session_start();
@@ -28,14 +35,15 @@ $_SESSION['theme'] = $theme;
     <title><?= isset($title) ? $title : 'Portfolio' ?></title>
 
     <!-- Gebruik base om de juiste css te pakken (alle componenten) -->
-    <link rel="stylesheet" href="<?= $base ?>assets/css/main.css">
-    <link rel="stylesheet" href="<?= $base ?>assets/css/navBurger.css">
-    <link rel="stylesheet" href="<?= $base ?>assets/css/themeSlider.css">
-    <link rel="stylesheet" href="<?= $base ?>assets/css/logo.css">
-    <link rel="stylesheet" href="<?= $base ?>assets/css/footer.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/main.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/navBurger.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/themeSlider.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/logo.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/footer.css">
 
     <!-- Alle css files voor de aparte pagina's -->
-    <link rel="stylesheet" href="<?= $base ?>assets/css/home.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/home.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/login.css">
 
     <!-- Google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,7 +53,7 @@ $_SESSION['theme'] = $theme;
     <!-- Font Awesome inladen voor de icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <!-- Gebruik base om de juiste javascript te pakken -->
-    <script src="<?= $base ?>assets/js/script.js" defer></script>
+    <script src="<?= BASE_URL ?>assets/js/script.js" defer></script>
 </head>
 <!-- Gebruik de theme variabele zodat de body zich aan past aan de hand van de toggle -->
 <body class="<?= $theme ?>">

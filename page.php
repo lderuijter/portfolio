@@ -10,7 +10,7 @@ if (!in_array($page, $validPages)) {
     $page = '404';
 }
 
-include __DIR__ . "../views/$page.php";
+include BASE_PATH . "/views/$page.php";
 
 if ($page !== '404') {
     include 'views/components/themeSlider.php';

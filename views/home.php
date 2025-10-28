@@ -1,14 +1,9 @@
-<?php
-// de base variabele wordt altijd opgehaald uit de config.php
-/** @var $base */
-?>
-
 <h1 class="page-heading">Home page</h1>
 
 <div class="about-me-container">
     <div class="lucas-image-container">
         <div class="circle-image">
-            <img src="<?= $base ?>assets/images/lucas.png" alt="profile">
+            <img src="<?= BASE_URL ?>assets/images/lucas.png" alt="profile">
         </div>
     </div>
     <div class="about-me-text">
@@ -42,10 +37,10 @@
         <img src="https://lucasderuijter.vercel.app/public/generate-form.png" alt="preview-project">
     </div>
     <div class="preview-image project-2">
-        <img src="<?= $base ?>assets/images/ProjectCardAdmin.png" alt="preview-project">
+        <img src="<?= BASE_URL ?>assets/images/ProjectCardAdmin.png" alt="preview-project">
     </div>
     <div class="preview-button">
-        <a href="<?= $base ?>projects">
+        <a href="<?= BASE_URL ?>projects">
             <p>View more</p>
         </a>
     </div>
