@@ -10,4 +10,4 @@ if (!$auth->isLoggedIn()) {
 }
 ?>
 
-<h1>Create / edit projects</h1>
+<h1>Create projects</h1>
