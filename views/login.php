@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php if (!$auth->isLoggedIn()): ?>
     <form method="post">
         <label for="password">
-            <input id="password" type="password" name="password" placeholder="Password">
+            <input id="password" type="password" name="password" placeholder="Password" required>
         </label>
         <button name="login" type="submit" value="Login">
             Login
