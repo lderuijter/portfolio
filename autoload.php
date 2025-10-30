@@ -7,3 +7,15 @@ spl_autoload_register(function ($class) {
         require_once $path;
     }
 });
+
+function load_css_folder($path): void
+{
+    $fullPath = BASE_PATH . "/$path";
+    $baseUrl = BASE_URL . $path;
+
+    // scan folder voor .css bestanden
+    foreach (glob("$fullPath/*.css") as $file) {
+        $fileName = basename($file);
+        echo '<link rel="stylesheet" href="' . $baseUrl . '/' . $fileName . '">' . PHP_EOL;
+    }
+}

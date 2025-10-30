@@ -41,19 +41,11 @@ $_SESSION['theme'] = $theme;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Pak de title uit de page.php afhankelijk van de pagina-->
+    <!-- Pak de title uit de page.php afhankelijk van de pagina -->
     <title><?= $title ?? 'Portfolio' ?></title>
 
-    <!-- Gebruik base om de juiste css te pakken (alle componenten) -->
-    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/main.css">
-    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/navBurger.css">
-    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/themeSlider.css">
-    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/logo.css">
-    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/footer.css">
-
-    <!-- Alle css files voor de aparte pagina's -->
-    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/home.css">
-    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/login.css">
+    <!-- CSS bestanden inladen van aangegeven folder -->
+    <?php load_css_folder('assets/css/'); ?>
 
     <!-- Google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

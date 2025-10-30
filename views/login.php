@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <?php if (isset($_GET['error'])): ?>
     <div class="incorrect-password">
-        <p>Incorrect password</p>
+        <p>Incorrect password!</p>
     </div>
 <?php endif; ?>
 <?php if (!AUTH->isLoggedIn()): ?>

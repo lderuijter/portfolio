@@ -19,8 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     switch ($action) {
         case 'create':
             if (empty($_POST['title']) || empty($_POST['description'])) {
-                http_response_code(400);
-                echo "Title and description are required.";
+                header("Location: createProject?error=1");
                 exit;
             }
             $newProject = $projectService->create($_POST);
@@ -42,6 +41,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <h1>Create projects</h1>
+
+<?php if (isset($_GET['error'])): ?>
+    <div class="missing-input">
+        <p>Title and description are required!</p>
+    </div>
+<?php endif; ?>
 
 <form method="post">
     <?php if ($project): ?>
