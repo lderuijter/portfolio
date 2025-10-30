@@ -8,7 +8,7 @@ class ProjectService
 {
     private static ?ProjectService $instance = null;
 
-    private array $projects;
+    private array $projects = [];
 
     // functie om een enkele instantie van de ProjectService te maken singleton pattern
     public static function getInstance(): ?ProjectService
@@ -26,13 +26,13 @@ class ProjectService
         })[0] ?? null;
     }
 
-    public function create($_POST): ?Project
+    public function create($formData): ?Project
     {
         $project = new Project();
-        $project->setTitle($_POST['title']);
-        $project->setDescription($_POST['description']);
-        $project->setSkills($_POST['skills'] ?? null);
-        $project->setImage($_POST['image'] ?? null);
+        $project->setTitle($formData['title']);
+        $project->setDescription($formData['description']);
+        $project->setSkills($formData['skills'] ?? null);
+        $project->setImage($formData['image'] ?? null);
         return $project;
     }
 
