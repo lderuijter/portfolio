@@ -18,10 +18,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? null;
     switch ($action) {
         case 'create':
-            $projectService->create($_POST);
+            if (empty($_POST['title']) || empty($_POST['description'])) {
+                http_response_code(400);
+                echo "Title and description are required.";
+                exit;
+            }
+            $newProject = $projectService->create($_POST);
+            $projectService->addProject($newProject);
             break;
         case 'edit':
-            $projectService->updateProject($_POST['projectId']);
+            if (isset($_POST['projectId'])) {
+                $projectService->updateProject($_POST);
+            }
             break;
         default:
             // onbekende actie handelen
@@ -29,30 +37,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "Invalid or missing action.";
             break;
     }
+    header("Location: projects");
 }
-/* TODO:
- * Wanneer Project niet null is, dan is het een bestaand project wat bewerkt moet worden
- * Wanneer Project null is, dan is het een nieuw project wat aangemaakt moet worden
- * */
 ?>
 
 <h1>Create projects</h1>
 
-<form>
+<form method="post">
+    <?php if ($project): ?>
+        <input type="hidden" name="projectId" value="<?= htmlspecialchars($project->getId()) ?>">
+    <?php endif; ?>
     <p>Title: </p>
     <label>
-        <input type="text" name="title" placeholder="Title">
+        <input type="text" name="title" placeholder="Title" value="<?= $project ? $project->getTitle() : '' ?>" required>
     </label>
     <p>Description: </p>
     <label>
-        <input type="text" name="description" placeholder="Description">
+        <input type="text" name="description" placeholder="Description" value="<?= $project ? $project->getDescription() : '' ?>" required>
     </label>
 
-    <button name="action" type="submit" value="create">
-        Create
-    </button>
-
-    <button name="action" type="submit" value="edit">
-        Edit
+    <button name="action" type="submit" value="<?= $project ? 'edit' : 'create' ?>">
+        <?= $project ? 'Save changes' : 'Create project' ?>
     </button>
 </form>

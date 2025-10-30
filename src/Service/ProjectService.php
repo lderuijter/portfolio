@@ -8,7 +8,13 @@ class ProjectService
 {
     private static ?ProjectService $instance = null;
 
-    private array $projects = [];
+    private array $projects;
+
+    public function __construct()
+    {
+        // initialiseren van de projects array door dit uit de session te halen als het undefined is dan lege array
+        $this->projects = $_SESSION['projects'] ?? [];
+    }
 
     // functie om een enkele instantie van de ProjectService te maken singleton pattern
     public static function getInstance(): ?ProjectService
@@ -21,18 +27,18 @@ class ProjectService
 
     public function getProjectById($projectId): ?Project
     {
-        return array_filter($this->projects, function ($p) use ($projectId) {
+        $filtered = array_filter($this->projects, function ($p) use ($projectId) {
             return $p->getId() === $projectId;
-        })[0] ?? null;
+        });
+
+        $projects = array_values($filtered); // herindexeren van de sleutels
+        return $projects[0] ?? null;
     }
 
     public function create($formData): ?Project
     {
         $project = new Project();
-        $project->setTitle($formData['title']);
-        $project->setDescription($formData['description']);
-        $project->setSkills($formData['skills'] ?? null);
-        $project->setImage($formData['image'] ?? null);
+        $this->applyForm($project, $formData);
         return $project;
     }
 
@@ -42,11 +48,11 @@ class ProjectService
         $this->applySession();
     }
 
-    public function updateProject($projectId): void
+    public function updateProject($formData): void
     {
-        foreach ($this->projects as $key => $project) {
-            if ($project->getId() === $projectId) {
-                $this->projects[$key] = $project;
+        foreach ($this->projects as $project) {
+            if ($project->getId() === $formData['projectId']) {
+                $this->applyForm($project, $formData);
                 break;
             }
         }
@@ -61,6 +67,15 @@ class ProjectService
         $this->applySession();
     }
 
+    public function applyForm(Project $project, $formData): ?Project
+    {
+        $project->setTitle($formData['title']);
+        $project->setDescription($formData['description']);
+        $project->setSkills($formData['skills'] ?? null);
+        $project->setImage($formData['image'] ?? null);
+        return $project;
+    }
+
     public function applySession(): void
     {
         $_SESSION['projects'] = $this->projects;
@@ -68,7 +83,7 @@ class ProjectService
 
     public function getProjects(): array
     {
-        return $this->projects;
+        return $_SESSION['projects'];
     }
 
     public function setProjects(array $projects): void

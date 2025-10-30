@@ -3,7 +3,7 @@
 use Service\ProjectService;
 
 $projectService = ProjectService::getInstance();
-$projects = $projectService->getProjects() ?? [];
+$projects = $_SESSION['projects'] ?? [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? null;
@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             break;
         case 'delete':
             $projectService->deleteProject($_POST['projectId']);
+            header("Location: projects");
             break;
         default:
             // onbekende actie handelen

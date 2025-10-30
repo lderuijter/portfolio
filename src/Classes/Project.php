@@ -40,22 +40,22 @@ class Project
         $this->description = $description;
     }
 
-    public function getSkills(): array
+    public function getSkills(): ?array
     {
         return $this->skills;
     }
 
-    public function setSkills(array $skills): void
+    public function setSkills(?array $skills): void
     {
         $this->skills = $skills;
     }
 
-    public function getImage(): string
+    public function getImage(): ?string
     {
         return $this->image;
     }
 
-    public function setImage(string $image): void
+    public function setImage(?string $image): void
     {
         $this->image = $image;
     }

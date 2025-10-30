@@ -40,8 +40,8 @@ class AuthController
     // functie om de gebruiker uit te loggen
     public function logout(): void
     {
-        session_destroy();
-        header("Location: login");
+        $_SESSION['logged_in'] = false;
+        header("Location: projects");
     }
 
 }
