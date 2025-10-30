@@ -8,14 +8,7 @@ class AuthController
 {
     private static ?AuthController $instance = null;
 
-    private function __construct()
-    {
-    } // private constructor
-
-    private function __clone()
-    {
-    } // clone uitgeschakeld
-
+    // functie om een enkele instantie van de AuthController te maken singleton pattern
     public static function getInstance(): ?AuthController
     {
         if (self::$instance === null) {

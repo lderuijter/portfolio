@@ -2,7 +2,8 @@
 
 namespace Service;
 
-class AuthService {
+class AuthService
+{
     // verifieer de ingevoerde wachtwoord met de stored hash door password_verify te gebruiken
     public static function verify_password($inputPassword): bool
     {
