@@ -41,7 +41,7 @@ class AuthController
     public function logout(): void
     {
         $_SESSION['logged_in'] = false;
-        header("Location: projects");
+        header("Location: login");
     }
 
 }
