@@ -1,18 +1,12 @@
 <?php
-require_once BASE_PATH . '/autoload.php';
-
-use Controller\AuthController;
-
-$auth = AuthController::getInstance();
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? null;
     switch ($action) {
         case 'login':
-            $auth->login();
+            AUTH->login();
             break;
         case 'logout':
-            $auth->logout();
+            AUTH->logout();
             break;
         default:
             // onbekende actie handelen
@@ -23,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<?php if (!$auth->isLoggedIn()): ?>
+<?php if (!AUTH->isLoggedIn()): ?>
     <h1>Login</h1>
 <?php else: ?>
     <h1>Logout</h1>
@@ -34,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <p>Incorrect password</p>
     </div>
 <?php endif; ?>
-<?php if (!$auth->isLoggedIn()): ?>
+<?php if (!AUTH->isLoggedIn()): ?>
     <form method="post">
         <label for="password">
             <input id="password" type="password" name="password" placeholder="Password" required>

@@ -1,12 +1,22 @@
 <?php
+// constant base path aanmaken voor require_once
+define('BASE_PATH', dirname(__FILE__));
+
+require_once BASE_PATH . '/autoload.php';
+
+use Controller\AuthController;
+
+// page moet globaal gebruikt kunnen worden en uit de GET-parameter gehaald worden
+define('PAGE', $_GET['page'] ?? 'home');
+// auth moet globaal gebruikt kunnen worden voor meerdere pagina's
+define('AUTH', AuthController::getInstance());
+
 // gebruikte protocol ophalen
 $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://';
 // domein ophalen
 $host = $_SERVER['HTTP_HOST'];
 // de juiste directory ophalen na de slash
 $scriptDir = dirname($_SERVER['SCRIPT_NAME']); // e.g., /portfolio
-// constant base path aanmaken voor require_once
-define('BASE_PATH', dirname(__FILE__));
 // constant base url aanmaken voor href en src
 define('BASE_URL', $protocol . $host . $scriptDir . '/');
 
