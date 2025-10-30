@@ -6,12 +6,17 @@ use Service\AuthService;
 
 class AuthController
 {
-    private static $instance = null;
+    private static ?AuthController $instance = null;
 
-    private function __construct() {} // private constructor
-    private function __clone() {} // clone uitgeschakeld
+    private function __construct()
+    {
+    } // private constructor
 
-    public static function getInstance()
+    private function __clone()
+    {
+    } // clone uitgeschakeld
+
+    public static function getInstance(): ?AuthController
     {
         if (self::$instance === null) {
             self::$instance = new AuthController();
@@ -20,9 +25,9 @@ class AuthController
     }
 
     // functie die het ingevoerde wachtwoord ophaalt en dit naar de verify_password functie stuurt
-    public function login()
+    public function login(): void
     {
-        $password = isset($_POST['password']) ? $_POST['password'] : '';
+        $password = $_POST['password'] ?? '';
 
         if (!empty($password) && AuthService::verify_password($password)) {
             $_SESSION['logged_in'] = true;
@@ -34,12 +39,14 @@ class AuthController
     }
 
     // functie om te controleren of de gebruiker is ingelogd
-    public function isLoggedIn() {
-        return isset($_SESSION['logged_in']) ? $_SESSION['logged_in'] : false;
+    public function isLoggedIn()
+    {
+        return $_SESSION['logged_in'] ?? false;
     }
 
     // functie om de gebruiker uit te loggen
-    public function logout() {
+    public function logout(): void
+    {
         session_destroy();
         header("Location: login");
     }

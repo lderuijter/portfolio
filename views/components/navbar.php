@@ -1,6 +1,6 @@
 <?php
 // zorg ervoor dat de huidige pagina bekend is in de variabele page
-$page = isset($_GET['page']) ? $_GET['page'] : 'home';
+$page = $_GET['page'] ?? 'home';
 ?>
 <div class="navbar">
     <button class="burger">

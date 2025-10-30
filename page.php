@@ -1,5 +1,5 @@
 <?php
-$page = isset($_GET['page']) ? $_GET['page'] : 'home';
+$page = $_GET['page'] ?? 'home';
 
 $title = ucfirst($page);
 

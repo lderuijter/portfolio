@@ -20,7 +20,7 @@ if (isset($_POST['theme'])) {
 }
 
 // check of het thema bestaat in de sessie, als dat zo is, pak dat thema, anders default dark
-$theme = isset($_SESSION['theme']) ? $_SESSION['theme'] : 'dark';
+$theme = $_SESSION['theme'] ?? 'dark';
 
 // sla het thema opnieuw op in de sessie zodat dit gebruikt kan worden in themeSlider.php
 $_SESSION['theme'] = $theme;
@@ -32,7 +32,7 @@ $_SESSION['theme'] = $theme;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Pak de title uit de page.php afhankelijk van de pagina-->
-    <title><?= isset($title) ? $title : 'Portfolio' ?></title>
+    <title><?= $title ?? 'Portfolio' ?></title>
 
     <!-- Gebruik base om de juiste css te pakken (alle componenten) -->
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/main.css">

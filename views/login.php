@@ -6,11 +6,19 @@ use Controller\AuthController;
 $auth = AuthController::getInstance();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['login'])) {
-        $auth->login();
-    }
-    if (isset($_POST['logout'])) {
-        $auth->logout();
+    $action = $_POST['action'] ?? null;
+    switch ($action) {
+        case 'login':
+            $auth->login();
+            break;
+        case 'logout':
+            $auth->logout();
+            break;
+        default:
+            // onbekende actie handelen
+            http_response_code(400);
+            echo "Invalid or missing action.";
+            break;
     }
 }
 ?>
@@ -31,13 +39,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label for="password">
             <input id="password" type="password" name="password" placeholder="Password" required>
         </label>
-        <button name="login" type="submit" value="Login">
+        <button name="action" type="submit" value="login">
             Login
         </button>
     </form>
 <?php else: ?>
     <form method="post">
-        <button name="logout" type="submit" value="Logout">
+        <button name="action" type="submit" value="logout">
             Logout
         </button>
     </form>
