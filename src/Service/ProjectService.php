@@ -44,7 +44,6 @@ class ProjectService
         $projects = $this->loadFromJson() ?? [];
 
         if (empty($projects)) {
-            $projects = [];
             $this->saveToFile($projects);
         }
 

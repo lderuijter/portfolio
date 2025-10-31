@@ -44,8 +44,11 @@ $_SESSION['theme'] = $theme;
     <!-- Pak de title uit de page.php afhankelijk van de pagina -->
     <title><?= $title ?? 'Portfolio' ?></title>
 
-    <!-- CSS bestanden inladen van aangegeven folder -->
-    <?php load_css_folder('assets/css/'); ?>
+    <!-- CSS-bestanden inladen van aangegeven folders -->
+    <!-- Eerst de componenten -->
+    <?php load_css_folder('assets/css/components/'); ?>
+    <!-- Daarna de pagina's -->
+    <?php load_css_folder('assets/css/pages'); ?>
 
     <!-- Google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
