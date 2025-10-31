@@ -1,4 +1,5 @@
 <?php
+
 use Service\ProjectService;
 
 // Op de pagina van het aanmaken of bewerken van een project moet de gebruiker ingelogd zijn
@@ -54,13 +55,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php endif; ?>
     <p>Title: </p>
     <label>
-        <input type="text" name="title" placeholder="Title" value="<?= $project ? $project->getTitle() : '' ?>" required>
+        <input type="text" name="title" placeholder="Title" value="<?= $project ? $project->getTitle() : '' ?>"
+               required>
     </label>
     <p>Description: </p>
     <label>
-        <input type="text" name="description" placeholder="Description" value="<?= $project ? $project->getDescription() : '' ?>" required>
+        <input type="text" name="description" placeholder="Description"
+               value="<?= $project ? $project->getDescription() : '' ?>" required>
     </label>
 
+    <p>Skills: </p>
+    <?php
+    $selectedSkills = $project ? $project->getSkills() : []; // als project bestaat, haal de skills op, anders lege array
+
+    $allSkills = ['HTML', 'CSS', 'JavaScript', 'PHP', 'Java', 'Laravel'];
+
+    foreach ($allSkills as $skill) {
+        $isChecked = in_array($skill, $selectedSkills) ? 'checked' : '';
+        echo "
+            <label class='skill'>
+                <input type='checkbox' name='skills[]' value='$skill' $isChecked>
+                $skill
+            </label>
+            <br>
+        ";
+    }
+    ?>
     <button name="action" type="submit" value="<?= $project ? 'edit' : 'create' ?>">
         <?= $project ? 'Save changes' : 'Create project' ?>
     </button>

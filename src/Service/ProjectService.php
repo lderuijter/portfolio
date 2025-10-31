@@ -7,16 +7,22 @@ use Classes\Project;
 class ProjectService
 {
     private static ?ProjectService $instance = null;
-
     private array $projects;
+    private string $filePath;
 
     public function __construct()
     {
-        // initialiseren van de projects array door dit uit de session te halen als het undefined is dan lege array
-        $this->projects = $_SESSION['projects'] ?? [];
+        // Start sessie als deze nog niet actief is
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        $this->filePath = BASE_PATH . '/projects.json';
+
+        // Laad projecten: eerst sessie, dan JSON, anders lege array
+        $this->projects = $this->loadProjects();
     }
 
-    // functie om een enkele instantie van de ProjectService te maken singleton pattern
     public static function getInstance(): ?ProjectService
     {
         if (self::$instance === null) {
@@ -25,16 +31,137 @@ class ProjectService
         return self::$instance;
     }
 
-    public function getProjectById($projectId): ?Project
+    /**
+     * Laadt projecten op een veilige manier:
+     * 1. Probeer eerst uit de sessie (echte Project-objecten)
+     * 2. Anders probeer uit JSON-bestand (array wordt omgezet naar Project-objecten)
+     * 3. Als niets bestaat, start met lege array en sla direct op in JSON
+     */
+    private function loadProjects(): array
     {
-        $filtered = array_filter($this->projects, function ($p) use ($projectId) {
-            return $p->getId() === $projectId;
-        });
+        if ($projects = $this->loadFromSession()) {
+            return $projects;
+        }
 
-        $projects = array_values($filtered); // herindexeren van de sleutels
-        return $projects[0] ?? null;
+        if ($projects = $this->loadFromJson()) {
+            // Zet JSON-projecten om naar sessie zodat ze direct gebruikt kunnen worden
+            $_SESSION['projects'] = $projects;
+            return $projects;
+        }
+
+        // Geen sessie of JSON beschikbaar → lege lijst
+        $_SESSION['projects'] = [];
+        $this->saveToFile([]);
+        return [];
     }
 
+    /**
+     * Laad projecten uit de sessie, als deze bestaan
+     */
+    private function loadFromSession(): ?array
+    {
+        return $_SESSION['projects'] ?? null;
+    }
+
+    /**
+     * Laad projecten uit JSON-bestand
+     * - Controleert of bestand bestaat
+     * - Decodeert JSON
+     * - Controleert op corruptie
+     * - Zet de array om naar Project-objecten
+     */
+    private function loadFromJson(): ?array
+    {
+        if (!file_exists($this->filePath)) {
+            return null;
+        }
+
+        $json = file_get_contents($this->filePath);
+        $data = json_decode($json, true);
+
+        // Als JSON corrupt is, geef lege array terug i.p.v. fouten
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return [];
+        }
+
+        if (empty($data)) {
+            return null;
+        }
+
+        // Converteer elk item naar Project-object
+        return array_map([$this, 'arrayToProject'], $data);
+    }
+
+    /**
+     * Vul een Project-object met formulierdata
+     * - Skills worden altijd als array gezet, of null als niet geselecteerd
+     * - Image kan null zijn (TODO: image upload)
+     */
+    public function applyForm(Project $project, array $formData): ?Project
+    {
+        $project->setTitle($formData['title']);
+        $project->setDescription($formData['description']);
+
+        // Verwerk skills: altijd array of null
+        $skills = $formData['skills'] ?? null;
+        if ($skills !== null && !is_array($skills)) {
+            $skills = [$skills]; // fallback voor onverwachte string
+        }
+        $project->setSkills($skills);
+
+        // TODO: image upload verwerken
+        $project->setImage($formData['image'] ?? null);
+
+        return $project;
+    }
+
+    /**
+     * Sync projecten: sla op in sessie en JSON-bestand
+     * - Belangrijk: hiermee blijven sessie en bestand altijd up-to-date
+     */
+    private function sync(): void
+    {
+        $_SESSION['projects'] = $this->projects;
+        $this->saveToFile();
+    }
+
+    /**
+     * Converteer Project-objecten naar array en sla op in JSON
+     */
+    private function saveToFile(?array $projects = null): void
+    {
+        $data = array_map([$this, 'projectToArray'], $projects ?? $this->projects);
+        file_put_contents($this->filePath, json_encode($data, JSON_PRETTY_PRINT));
+    }
+
+    /**
+     * Zet Project-object om naar array
+     */
+    private function projectToArray(Project $project): array
+    {
+        return [
+            'id' => $project->getId(),
+            'title' => $project->getTitle(),
+            'description' => $project->getDescription(),
+            'skills' => $project->getSkills(),
+            'image' => $project->getImage(),
+        ];
+    }
+
+    /**
+     * Zet array om naar Project-object
+     * - Belangrijk bij het inlezen uit JSON
+     */
+    private function arrayToProject(array $data): Project
+    {
+        $project = new Project();
+        $project->setId($data['id']);
+        return $this->applyForm($project, $data);
+    }
+
+    /**
+     * Maak een nieuw Project-object aan en vul met formulierdata
+     */
     public function create($formData): ?Project
     {
         $project = new Project();
@@ -42,12 +169,23 @@ class ProjectService
         return $project;
     }
 
+    /**
+     * Voeg een project toe
+     * - Wordt toegevoegd aan array
+     * - Sessie en JSON worden gesynchroniseerd
+     */
     public function addProject(Project $project): void
     {
         $this->projects[] = $project;
-        $this->applySession();
+        $this->sync();
     }
 
+    /**
+     * Update een bestaand project
+     * - Zoekt project op ID
+     * - Past formulierdata toe
+     * - Sync sessie en JSON
+     */
     public function updateProject($formData): void
     {
         foreach ($this->projects as $project) {
@@ -56,38 +194,46 @@ class ProjectService
                 break;
             }
         }
-        $this->applySession();
+        $this->sync();
     }
 
+    /**
+     * Verwijder een project
+     * - Filtert project op ID
+     * - Sync sessie en JSON
+     */
     public function deleteProject($projectId): void
     {
         $this->projects = array_filter($this->projects, function ($p) use ($projectId) {
             return $p->getId() !== $projectId;
         });
-        $this->applySession();
+        $this->sync();
     }
 
-    public function applyForm(Project $project, $formData): ?Project
+    /**
+     * Zoek een project op ID
+     */
+    public function getProjectById($projectId): ?Project
     {
-        $project->setTitle($formData['title']);
-        $project->setDescription($formData['description']);
-        $project->setSkills($formData['skills'] ?? null);
-        $project->setImage($formData['image'] ?? null);
-        return $project;
+        $filtered = array_filter($this->projects, fn($p) => $p->getId() === $projectId);
+        $projects = array_values($filtered);
+        return $projects[0] ?? null;
     }
 
-    public function applySession(): void
-    {
-        $_SESSION['projects'] = $this->projects;
-    }
-
+    /**
+     * Geef alle projecten terug
+     */
     public function getProjects(): array
     {
-        return $_SESSION['projects'];
+        return $this->projects;
     }
 
+    /**
+     * Stel alle projecten in (en sync)
+     */
     public function setProjects(array $projects): void
     {
         $this->projects = $projects;
+        $this->sync();
     }
 }

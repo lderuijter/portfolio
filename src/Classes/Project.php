@@ -20,6 +20,11 @@ class Project
         return $this->id;
     }
 
+    public function setId(string $id): void
+    {
+        $this->id = $id;
+    }
+
     public function getTitle(): string
     {
         return $this->title;
