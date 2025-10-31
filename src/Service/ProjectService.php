@@ -32,36 +32,27 @@ class ProjectService
     }
 
     /**
-     * Laadt projecten op een veilige manier:
-     * 1. Probeer eerst uit de sessie (echte Project-objecten)
-     * 2. Anders probeer uit JSON-bestand (array wordt omgezet naar Project-objecten)
-     * 3. Als niets bestaat, start met lege array en sla direct op in JSON
+     * Ophalen projecten.
+     * - Haal ze eerst uit het JSON-bestand.
+     * - Als er geen projecten zijn, maak een lege lijst en sla die op.
+     * - Zet de projecten ook in de sessie zodat de applicatie ze direct kan gebruiken.
+     *
+     * @return Project[] Lijst van Project-objecten
      */
     private function loadProjects(): array
     {
-        if ($projects = $this->loadFromSession()) {
-            return $projects;
+        $projects = $this->loadFromJson() ?? [];
+
+        if (empty($projects)) {
+            $projects = [];
+            $this->saveToFile($projects);
         }
 
-        if ($projects = $this->loadFromJson()) {
-            // Zet JSON-projecten om naar sessie zodat ze direct gebruikt kunnen worden
-            $_SESSION['projects'] = $projects;
-            return $projects;
-        }
+        $_SESSION['projects'] = $projects;
 
-        // Geen sessie of JSON beschikbaar → lege lijst
-        $_SESSION['projects'] = [];
-        $this->saveToFile([]);
-        return [];
+        return $projects;
     }
 
-    /**
-     * Laad projecten uit de sessie, als deze bestaan
-     */
-    private function loadFromSession(): ?array
-    {
-        return $_SESSION['projects'] ?? null;
-    }
 
     /**
      * Laad projecten uit JSON-bestand
