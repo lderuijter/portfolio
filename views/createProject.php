@@ -66,7 +66,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <p>Skills: </p>
     <?php
-    $selectedSkills = $project ? $project->getSkills() : []; // als project bestaat, haal de skills op, anders lege array
+    $selectedSkills = [];
+
+    if ($project) {
+        if (!empty($project->getSkills()) && is_array($project->getSkills())) {
+            $selectedSkills = $project->getSkills();
+        }
+    }
 
     $allSkills = ['HTML', 'CSS', 'JavaScript', 'PHP', 'Java', 'Laravel'];
 
