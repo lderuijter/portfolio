@@ -2,11 +2,14 @@
 
 namespace Service;
 
+use Core\SingletonTrait;
+
 use Classes\Project;
+use Exception;
 
 class ProjectService
 {
-    private static ?ProjectService $instance = null;
+    use SingletonTrait;
     private array $projects;
     private string $filePath;
 
@@ -21,14 +24,6 @@ class ProjectService
 
         // Laad projecten: eerst sessie, dan JSON, anders lege array
         $this->projects = $this->loadProjects();
-    }
-
-    public static function getInstance(): ?ProjectService
-    {
-        if (self::$instance === null) {
-            self::$instance = new ProjectService();
-        }
-        return self::$instance;
     }
 
     /**
@@ -99,10 +94,32 @@ class ProjectService
         }
         $project->setSkills($skills);
 
-        // TODO: image upload verwerken
-        $project->setImage($formData['image'] ?? null);
+        if (!empty($_FILES['image']) && $_FILES['image']['error'] !== UPLOAD_ERR_NO_FILE) {
+            $this->handleImage($project, $_FILES['image'], $errors);
+        }
 
         return $project;
+    }
+
+    public function handleImage(Project $project, ?array $file, ?array &$errors = []): void
+    {
+        $uploadService = UploadService::getInstance();
+
+        if (empty($file) || $file['error'] === UPLOAD_ERR_NO_FILE) {
+            return;
+        }
+
+        try {
+            $path = $uploadService->uploadFile($file);
+
+            if ($image = $project->getImage()) {
+                $uploadService->deleteFile($image);
+            }
+
+            $project->setImage($path);
+        } catch (Exception $e) {
+            $errors[] = $e->getMessage();
+        }
     }
 
     /**
@@ -146,13 +163,17 @@ class ProjectService
     {
         $project = new Project();
         $project->setId($data['id']);
-        return $this->applyForm($project, $data);
+        $project->setTitle($data['title']);
+        $project->setDescription($data['description']);
+        $project->setSkills($data['skills'] ?? null);
+        $project->setImage($data['image'] ?? null);
+        return $project;
     }
 
     /**
      * Maak een nieuw Project-object aan en vul met formulierdata
      */
-    public function create($formData): ?Project
+    public function create(array $formData): ?Project
     {
         $project = new Project();
         $this->applyForm($project, $formData);
@@ -172,18 +193,15 @@ class ProjectService
 
     /**
      * Update een bestaand project
-     * - Zoekt project op ID
      * - Past formulierdata toe
      * - Sync sessie en JSON
      */
-    public function updateProject($formData): void
+    public function updateProject(string $projectId, array $formData, ?array &$errors = []): void
     {
-        foreach ($this->projects as $project) {
-            if ($project->getId() === $formData['projectId']) {
-                $this->applyForm($project, $formData);
-                break;
-            }
+        if (!$projectToUpdate = $this->getProjectById($projectId)) {
+            $errors[] = 'Project not found.';
         }
+        $this->applyForm($projectToUpdate, $formData);
         $this->sync();
     }
 
@@ -192,18 +210,29 @@ class ProjectService
      * - Filtert project op ID
      * - Sync sessie en JSON
      */
-    public function deleteProject($projectId): void
+    public function deleteProject(string $projectId): void
     {
-        $this->projects = array_filter($this->projects, function ($p) use ($projectId) {
-            return $p->getId() !== $projectId;
+        $uploadService = UploadService::getInstance();
+
+        $this->projects = array_filter($this->projects, function ($p) use ($projectId, $uploadService) {
+            if ($p->getId() === $projectId) {
+                // Verwijder afbeelding als deze bestaat
+                if ($p->getImage() !== null) {
+                    $uploadService->deleteFile($p->getImage());
+                }
+                return false; // false zodat het project wordt verwijderd
+            }
+            return true; // true zodat de andere projecten blijven
         });
+
         $this->sync();
     }
+
 
     /**
      * Zoek een project op ID
      */
-    public function getProjectById($projectId): ?Project
+    public function getProjectById(string $projectId): ?Project
     {
         $filtered = array_filter($this->projects, fn($p) => $p->getId() === $projectId);
         $projects = array_values($filtered);

@@ -8,7 +8,7 @@ class Project
     private string $title;
     private string $description;
     private ?array $skills; // Skills mogen null zijn
-    private ?string $image; // Image mag null zijn
+    private ?string $image = null; // Image mag null zijn
 
     public function __construct()
     {

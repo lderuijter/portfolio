@@ -2,11 +2,13 @@
 
 use Service\ProjectService;
 
-// Op de pagina van het aanmaken of bewerken van een project moet de gebruiker ingelogd zijn
+// Moet ingelogd zijn om deze pagina te kunnen bekijken
 if (!AUTH->isLoggedIn()) {
     header('Location: login');
+    exit;
 }
 
+$errors = [];
 $projectService = ProjectService::getInstance();
 $project = null;
 
@@ -17,77 +19,100 @@ if (isset($_GET['projectId'])) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? null;
-    switch ($action) {
-        case 'create':
-            if (empty($_POST['title']) || empty($_POST['description'])) {
-                header("Location: createProject?error=1");
+
+    try {
+        switch ($action) {
+            case 'create':
+                if (empty($_POST['title']) || empty($_POST['description'])) {
+                    $errors[] = 'Title and description are required!';
+                    break;
+                }
+
+                $newProject = $projectService->create($_POST);
+
+                if (empty($errors)) {
+                    $projectService->addProject($newProject);
+                    header('Location: projects');
+                    exit;
+                }
+                break;
+
+            case 'edit':
+                if (!isset($_POST['projectId'])) {
+                    $errors[] = 'Project ID is required for editing.';
+                    break;
+                }
+
+                $projectService->updateProject($_POST['projectId'], $_POST, $errors);
+
+                if (empty($errors)) {
+                    header('Location: projects');
+                    exit;
+                }
+                break;
+
+            default:
+                http_response_code(400);
+                echo "Invalid or missing action.";
                 exit;
-            }
-            $newProject = $projectService->create($_POST);
-            $projectService->addProject($newProject);
-            break;
-        case 'edit':
-            if (isset($_POST['projectId'])) {
-                $projectService->updateProject($_POST);
-            }
-            break;
-        default:
-            // onbekende actie handelen
-            http_response_code(400);
-            echo "Invalid or missing action.";
-            break;
+        }
+    } catch (Exception $e) {
+        $errors[] = $e->getMessage();
     }
-    header("Location: projects");
 }
 ?>
 
-<h1>Create projects</h1>
+<h1><?= $project ? 'Edit Project' : 'Create Project' ?></h1>
 
-<?php if (isset($_GET['error'])): ?>
-    <div class="missing-input">
-        <p>Title and description are required!</p>
+<?php if (!empty($errors)): ?>
+    <div class="errors">
+        <?php foreach ($errors as $error): ?>
+            <p><?= htmlspecialchars($error) ?></p>
+        <?php endforeach; ?>
     </div>
 <?php endif; ?>
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     <?php if ($project): ?>
         <input type="hidden" name="projectId" value="<?= htmlspecialchars($project->getId()) ?>">
     <?php endif; ?>
-    <p>Title: </p>
+
+    <p>Title:</p>
     <label>
-        <input type="text" name="title" placeholder="Title" value="<?= $project ? $project->getTitle() : '' ?>"
-               required>
+        <input type="text" name="title" placeholder="Title"
+               value="<?= $project ? htmlspecialchars($project->getTitle()) : '' ?>" required>
     </label>
-    <p>Description: </p>
+
+    <p>Description:</p>
     <label>
         <input type="text" name="description" placeholder="Description"
-               value="<?= $project ? $project->getDescription() : '' ?>" required>
+               value="<?= $project ? htmlspecialchars($project->getDescription()) : '' ?>" required>
     </label>
 
-    <p>Skills: </p>
+    <p>Image:</p>
+    <?php if ($project && $project->getImage()): ?>
+        <img class="edit-project-image" src="<?= htmlspecialchars($project->getImage()) ?>" alt="Project Image">
+        <p>Upload a new image to replace:</p>
+    <?php endif; ?>
+    <label>
+        <input type="file" name="image">
+    </label>
+
+    <p>Skills:</p>
     <?php
-    $selectedSkills = [];
-
-    if ($project) {
-        if (!empty($project->getSkills()) && is_array($project->getSkills())) {
-            $selectedSkills = $project->getSkills();
-        }
-    }
-
+    $selectedSkills = $project && is_array($project->getSkills()) ? $project->getSkills() : [];
     $allSkills = ['HTML', 'CSS', 'JavaScript', 'PHP', 'Java', 'Laravel'];
 
-    foreach ($allSkills as $skill) {
+    foreach ($allSkills as $skill):
         $isChecked = in_array($skill, $selectedSkills) ? 'checked' : '';
-        echo "
-            <label class='skill'>
-                <input type='checkbox' name='skills[]' value='$skill' $isChecked>
-                $skill
-            </label>
-            <br>
-        ";
-    }
-    ?>
-    <button name="action" type="submit" value="<?= $project ? 'edit' : 'create' ?>">
+        ?>
+        <label class="skill">
+            <input type="checkbox" name="skills[]" value="<?= $skill ?>" <?= $isChecked ?>>
+            <?= $skill ?>
+        </label><br>
+    <?php endforeach; ?>
+
+    <button type="submit" name="action" value="<?= $project ? 'edit' : 'create' ?>">
         <?= $project ? 'Save changes' : 'Create project' ?>
     </button>
 </form>

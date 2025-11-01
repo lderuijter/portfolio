@@ -29,8 +29,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <h1>Projects page</h1>
 
+<?php if (empty($projects)): ?>
+    <p>No projects found!</p>
+<?php endif; ?>
+
 <?php foreach ($projects as $project): ?>
     <div class="project">
+        <?php if ($project->getImage()): ?>
+            <img src="<?= htmlspecialchars($project->getImage()) ?>"
+                 alt="<?= htmlspecialchars($project->getTitle()) ?>">
+        <?php endif; ?>
         <h2><?= htmlspecialchars($project->getTitle()) ?></h2>
         <p><?= htmlspecialchars($project->getDescription()) ?></p>
         <?php foreach ($project->getSkills() ?? [] as $skill): ?>

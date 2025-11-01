@@ -2,21 +2,12 @@
 
 namespace Controller;
 
+use Core\SingletonTrait;
 use Service\AuthService;
 
 class AuthController
 {
-    private static ?AuthController $instance = null;
-
-    // functie om een enkele instantie van de AuthController te maken singleton pattern
-    public static function getInstance(): ?AuthController
-    {
-        if (self::$instance === null) {
-            self::$instance = new AuthController();
-        }
-        return self::$instance;
-    }
-
+    use SingletonTrait;
     // functie die het ingevoerde wachtwoord ophaalt en dit naar de verify_password functie stuurt
     public function login(): void
     {
