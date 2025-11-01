@@ -1,0 +1,90 @@
+.no-projects p {
+    color: red;
+}
+
+.project-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 50px;
+}
+
+.project {
+    padding: 20px;
+    text-align: center;
+    font-family: sans-serif;
+    max-width: 300px;
+    width: 100%;
+    box-sizing: border-box;
+    word-wrap: break-word;
+}
+
+.project-image {
+    width: 250px;
+    height: 250px;
+}
+
+.project img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.project-details {
+    background-color: var(--bg-light);
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.project-title {
+    font-family: 'Lobster Two', sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.project-description {
+    font-size: 18px;
+}
+
+.project-skill-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 10px;
+    width: 100%;
+    margin-top: 10px;
+    justify-items: center;
+}
+
+.project-skill {
+    background-color: var(--button-color);
+    color: var(--text);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    width: fit-content;
+}
+
+.edit-button, .delete-button, .create-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-family: 'Lobster Two', sans-serif;
+    background-color: #4f46e5;
+    color: var(--text);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+@media (max-width: 992px) {
+    .project-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 692px) {
+    .project-container {
+        grid-template-columns: 1fr;
+    }
+}
