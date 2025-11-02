@@ -97,7 +97,10 @@
     width: fit-content;
 }
 
-.create-button { background-color: #52D078; }
+.create-button {
+    background-color: #52D078;
+    margin-bottom: 20px;
+}
 .edit-button { background-color: #FFC570; }
 .delete-button { background-color: #FF7070; }
 
