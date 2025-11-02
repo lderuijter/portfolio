@@ -1,25 +1,12 @@
-.no-projects p {
-    color: red;
-}
-
 .project-container {
     display: grid;
     gap: 50px;
-}
-
-.project-container.columns-1 {
-    grid-template-columns: 1fr;
     justify-items: center;
 }
 
-.project-container.columns-2 {
-    grid-template-columns: repeat(2, 1fr);
-    justify-items: center;
-}
-
-.project-container.columns-3 {
-    grid-template-columns: repeat(3, 1fr);
-}
+.project-container.columns-1 { grid-template-columns: 1fr; }
+.project-container.columns-2 { grid-template-columns: repeat(2, 1fr); }
+.project-container.columns-3 { grid-template-columns: repeat(3, 1fr); }
 
 .project {
     padding: 20px;
@@ -46,8 +33,10 @@
     background-color: var(--bg-light);
     border-radius: 10px;
     margin-top: 10px;
+    padding: 10px;
 }
 
+/* Titel & beschrijving */
 .project-title {
     font-family: 'Lobster Two', sans-serif;
     font-size: 24px;
@@ -55,49 +44,74 @@
     margin-top: 10px;
     margin-bottom: 20px;
 }
+.project-description { font-size: 18px; }
 
-.project-description {
-    font-size: 18px;
+/* Skills en admin-buttons naast elkaar */
+.project-actions {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
 }
 
 .project-skill-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
     gap: 10px;
-    padding: 10px;
-    width: 100%;
-    margin-top: 10px;
+    width: 75%;
+    min-height: 90px;
+    align-items: center;
     justify-items: center;
 }
+
+.project-skill-container.columns-1 { grid-template-columns: 1fr; }
+.project-skill-container.columns-2 { grid-template-columns: repeat(2, 1fr); }
 
 .project-skill {
     background-color: var(--button-color);
     color: var(--text);
-    padding: 5px 10px;
-    border-radius: 5px;
+    padding: 10px;
+    border-radius: 15px;
     font-size: 14px;
     width: fit-content;
 }
 
-.edit-button, .delete-button, .create-button {
-    padding: 10px 20px;
+/* Admin buttons */
+.admin-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: end;
+    align-items: end;
+}
+
+.admin-buttons button, .create-button {
+    padding: 10px 15px;
     font-size: 16px;
     font-family: 'Lobster Two', sans-serif;
-    background-color: #4f46e5;
     color: var(--text);
     border: none;
     border-radius: 8px;
     cursor: pointer;
+    width: fit-content;
 }
 
+.create-button { background-color: #52D078; }
+.edit-button { background-color: #FFC570; }
+.delete-button { background-color: #FF7070; }
+
+/* Responsive */
 @media (max-width: 992px) {
-    .project-container[class*="columns-"] {
-        grid-template-columns: repeat(2, 1fr);
-    }
+    .project-container[class*="columns-"] { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 692px) {
-    .project-container[class*="columns-"] {
-        grid-template-columns: 1fr;
-    }
+    .project-container[class*="columns-"] { grid-template-columns: 1fr; }
+}
+
+.no-content p {
+    font-family: sans-serif;
+    text-align: center;
+    color: red;
 }

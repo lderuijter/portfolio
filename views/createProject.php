@@ -91,7 +91,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <p>Image:</p>
     <?php if ($project && $project->getImage()): ?>
-        <img class="edit-project-image" src="<?= htmlspecialchars($project->getImage()) ?>" alt="Project Image">
+        <div class="edit-image-container">
+            <img class="edit-image" src="<?= htmlspecialchars($project->getImage()) ?>" alt="Project Image">
+        </div>
         <p>Upload a new image to replace:</p>
     <?php endif; ?>
     <label>

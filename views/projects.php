@@ -30,13 +30,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <h1>Projects page</h1>
 
 <?php if (empty($projects)): ?>
-    <div class="no-projects">
+    <div class="no-content">
         <p>No projects found!</p>
     </div>
 <?php endif; ?>
 
-<?php $columnCount = min(3, count($projects)); ?>
-<div class="project-container columns-<?= $columnCount ?>">
+<?php $projectCount = min(3, count($projects)); ?>
+<div class="project-container columns-<?= $projectCount ?>">
     <?php foreach ($projects as $project): ?>
         <div class="project">
             <?php if ($project->getImage()): ?>
@@ -57,22 +57,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="project-description">
                     <p><?= htmlspecialchars($project->getDescription()) ?></p>
                 </div>
-                <div class="project-skill-container">
-                    <?php foreach ($project->getSkills() ?? [] as $skill): ?>
-                        <div class="project-skill">
-                            <?= htmlspecialchars($skill) ?>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-                <?php if (AUTH->isLoggedIn()): ?>
-                    <div class="admin-buttons">
+                <div class="project-actions">
+                    <?php $skillCount = min(2, count($project->getSkills() ?? [])); ?>
+                    <div class="project-skill-container columns-<?= $skillCount ?>">
+                        <?php if (empty($project->getSkills())): ?>
+                            <div class="no-content">
+                                <p>No skills selected!</p>
+                            </div>
+                        <?php endif; ?>
+                        <?php foreach ($project->getSkills() ?? [] as $skill): ?>
+                            <div class="project-skill">
+                                <?= htmlspecialchars($skill) ?>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <?php if (AUTH->isLoggedIn()): ?>
                         <form method="post">
                             <input name="projectId" type="hidden" value="<?= htmlspecialchars($project->getId()) ?>">
-                            <button name="action" type="submit" class="edit-button" value="edit">Edit</button>
-                            <button name="action" type="submit" class="delete-button" value="delete">Delete</button>
+                            <div class="admin-buttons">
+                                <button name="action" type="submit" class="edit-button" value="edit">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+                                <button name="action" type="submit" class="delete-button" value="delete">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </div>
                         </form>
-                    </div>
-                <?php endif; ?>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
     <?php endforeach; ?>

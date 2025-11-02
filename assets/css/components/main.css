@@ -19,6 +19,7 @@ body.dark {
     --text: hsl(0 0% 95%);
     --text-muted: hsl(0 0% 70%);
     --button-color: hsl(0, 58%, 51%);
+    --subtle-color: #FF7070;
 }
 
 /* Light theme variabelen */
@@ -30,6 +31,7 @@ body.light {
     --text: hsl(0 0% 5%);
     --text-muted: hsl(0 0% 30%);
     --button-color: hsl(211, 92%, 56%);
+    --subtle-color: #73B3F8;
 }
 
 /* font, background en color voor de gehele body */

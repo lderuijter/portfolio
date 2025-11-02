@@ -1,3 +1,21 @@
 .create-errors p {
     color: red;
 }
+
+form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.edit-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.edit-image {
+    width: 50%;
+    height: 50%;
+}
