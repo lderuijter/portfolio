@@ -4,8 +4,21 @@
 
 .project-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
     gap: 50px;
+}
+
+.project-container.columns-1 {
+    grid-template-columns: 1fr;
+    justify-items: center;
+}
+
+.project-container.columns-2 {
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+}
+
+.project-container.columns-3 {
+    grid-template-columns: repeat(3, 1fr);
 }
 
 .project {
@@ -78,13 +91,13 @@
 }
 
 @media (max-width: 992px) {
-    .project-container {
+    .project-container[class*="columns-"] {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media (max-width: 692px) {
-    .project-container {
+    .project-container[class*="columns-"] {
         grid-template-columns: 1fr;
     }
 }

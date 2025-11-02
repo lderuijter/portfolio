@@ -35,7 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 <?php endif; ?>
 
-<div class="project-container">
+<?php $columnCount = min(3, count($projects)); ?>
+<div class="project-container columns-<?= $columnCount ?>">
     <?php foreach ($projects as $project): ?>
         <div class="project">
             <?php if ($project->getImage()): ?>
