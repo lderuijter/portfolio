@@ -10,8 +10,13 @@ use Exception;
 class ProjectService
 {
     use SingletonTrait;
+    // Array met projecten
     private array $projects;
-    private string $filePath;
+    // Path naar JSON-bestand
+    private string $jsonFilePath;
+    // Service classes
+    private ImageService $imageService;
+    private JsonService $jsonService;
 
     public function __construct()
     {
@@ -20,9 +25,12 @@ class ProjectService
             session_start();
         }
 
-        $this->filePath = BASE_PATH . '/projects.json';
+        $this->imageService = ImageService::getInstance();
+        $this->jsonService = JsonService::getInstance();
 
-        // Laad projecten: eerst sessie, dan JSON, anders lege array
+        $this->jsonFilePath = BASE_PATH . '/projects.json';
+
+        // Laad projecten: JSON is leidend hierin
         $this->projects = $this->loadProjects();
     }
 
@@ -36,58 +44,29 @@ class ProjectService
      */
     private function loadProjects(): array
     {
-        $projects = $this->loadFromJson() ?? [];
+        $projects = $this->jsonService->loadFromJson($this->jsonFilePath) ?? [];
 
         if (empty($projects)) {
-            $this->saveToFile($projects);
+            $this->jsonService->saveToFile($projects, $this->jsonFilePath);
         }
 
+        // Zet projecten in de sessie
         $_SESSION['projects'] = $projects;
 
         return $projects;
     }
 
-
-    /**
-     * Laad projecten uit JSON-bestand
-     * - Controleert of bestand bestaat
-     * - Decodeert JSON
-     * - Controleert op corruptie
-     * - Zet de array om naar Project-objecten
-     */
-    private function loadFromJson(): ?array
-    {
-        if (!file_exists($this->filePath)) {
-            return null;
-        }
-
-        $json = file_get_contents($this->filePath);
-        $data = json_decode($json, true);
-
-        // Als JSON corrupt is, geef lege array terug i.p.v. fouten
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            return [];
-        }
-
-        if (empty($data)) {
-            return null;
-        }
-
-        // Converteer elk item naar Project-object
-        return array_map([$this, 'arrayToProject'], $data);
-    }
-
     /**
      * Vul een Project-object met formulierdata
      * - Skills worden altijd als array gezet, of null als niet geselecteerd
-     * - Image kan null zijn (TODO: image upload)
+     * - Image kan null zijn
      */
     public function applyForm(Project $project, array $formData): ?Project
     {
         $project->setTitle($formData['title']);
         $project->setDescription($formData['description']);
 
-        // Verwerk skills: altijd array of null
+        // Verwerk skills: array of null
         $skills = $formData['skills'] ?? null;
         if ($skills !== null && !is_array($skills)) {
             $skills = [$skills]; // fallback voor onverwachte string
@@ -101,19 +80,20 @@ class ProjectService
         return $project;
     }
 
+    /**
+     * handleImage: zorgt ervoor dat de afbeelding wordt opgeslagen of verwijderd en vervangen
+     */
     public function handleImage(Project $project, ?array $file, ?array &$errors = []): void
     {
-        $uploadService = UploadService::getInstance();
-
         if (empty($file) || $file['error'] === UPLOAD_ERR_NO_FILE) {
             return;
         }
 
         try {
-            $path = $uploadService->uploadFile($file);
+            $path = $this->imageService->uploadFile($file);
 
             if ($image = $project->getImage()) {
-                $uploadService->deleteFile($image);
+                $this->imageService->deleteFile($image);
             }
 
             $project->setImage($path);
@@ -129,45 +109,7 @@ class ProjectService
     private function sync(): void
     {
         $_SESSION['projects'] = $this->projects;
-        $this->saveToFile();
-    }
-
-    /**
-     * Converteer Project-objecten naar array en sla op in JSON
-     */
-    private function saveToFile(?array $projects = null): void
-    {
-        $data = array_map([$this, 'projectToArray'], $projects ?? $this->projects);
-        file_put_contents($this->filePath, json_encode($data, JSON_PRETTY_PRINT));
-    }
-
-    /**
-     * Zet Project-object om naar array
-     */
-    private function projectToArray(Project $project): array
-    {
-        return [
-            'id' => $project->getId(),
-            'title' => $project->getTitle(),
-            'description' => $project->getDescription(),
-            'skills' => $project->getSkills(),
-            'image' => $project->getImage(),
-        ];
-    }
-
-    /**
-     * Zet array om naar Project-object
-     * - Belangrijk bij het inlezen uit JSON
-     */
-    private function arrayToProject(array $data): Project
-    {
-        $project = new Project();
-        $project->setId($data['id']);
-        $project->setTitle($data['title']);
-        $project->setDescription($data['description']);
-        $project->setSkills($data['skills'] ?? null);
-        $project->setImage($data['image'] ?? null);
-        return $project;
+        $this->jsonService->saveToFile($this->projects, $this->jsonFilePath);
     }
 
     /**
@@ -212,13 +154,13 @@ class ProjectService
      */
     public function deleteProject(string $projectId): void
     {
-        $uploadService = UploadService::getInstance();
+        $imageService = ImageService::getInstance();
 
-        $this->projects = array_filter($this->projects, function ($p) use ($projectId, $uploadService) {
+        $this->projects = array_filter($this->projects, function ($p) use ($projectId, $imageService) {
             if ($p->getId() === $projectId) {
                 // Verwijder afbeelding als deze bestaat
                 if ($p->getImage() !== null) {
-                    $uploadService->deleteFile($p->getImage());
+                    $imageService->deleteFile($p->getImage());
                 }
                 return false; // false zodat het project wordt verwijderd
             }
@@ -234,25 +176,11 @@ class ProjectService
      */
     public function getProjectById(string $projectId): ?Project
     {
+        // Filter projecten op ID wanneer deze matched met project ID
         $filtered = array_filter($this->projects, fn($p) => $p->getId() === $projectId);
+        // Herindexeer array
         $projects = array_values($filtered);
+        // Haal de eerste waarde op of null als er geen project gevonden is
         return $projects[0] ?? null;
-    }
-
-    /**
-     * Geef alle projecten terug
-     */
-    public function getProjects(): array
-    {
-        return $this->projects;
-    }
-
-    /**
-     * Stel alle projecten in (en sync)
-     */
-    public function setProjects(array $projects): void
-    {
-        $this->projects = $projects;
-        $this->sync();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Core;
 
+// trait om singleton pattern te kunnen hergebruiken
 trait SingletonTrait
 {
     private static ?self $instance = null;
