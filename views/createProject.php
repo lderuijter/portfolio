@@ -26,56 +26,55 @@ $projectController->handleRequest($_POST, $errors);
 <h1><?= $project ? 'Edit Project' : 'Create Project' ?></h1>
 
 <?php if (!empty($errors)): ?>
-    <div class="errors">
+    <div class="create-errors">
         <?php foreach ($errors as $error): ?>
             <p><?= htmlspecialchars($error) ?></p>
         <?php endforeach; ?>
     </div>
 <?php endif; ?>
-
 <form method="post" enctype="multipart/form-data">
-    <?php if ($project): ?>
-        <input type="hidden" name="projectId" value="<?= htmlspecialchars($project->getId()) ?>">
-    <?php endif; ?>
+    <div class="create-form-container">
+        <?php if ($project): ?>
+            <input type="hidden" name="projectId" value="<?= htmlspecialchars($project->getId()) ?>">
+        <?php endif; ?>
 
-    <p>Title:</p>
-    <label>
-        <input type="text" name="title" placeholder="Title"
-               value="<?= $project ? htmlspecialchars($project->getTitle()) : '' ?>" required>
-    </label>
+        <p class="title-hint">Title: </p>
+        <label>
+            <input class="title-input" type="text" name="title" placeholder="Title"
+                   value="<?= $project ? htmlspecialchars($project->getTitle()) : '' ?>" required>
+        </label>
 
-    <p>Description:</p>
-    <label>
-        <input type="text" name="description" placeholder="Description"
-               value="<?= $project ? htmlspecialchars($project->getDescription()) : '' ?>" required>
-    </label>
+        <p class="description-hint">Description: </p>
+        <label>
+            <textarea cols="30" rows="15" name="description" required><?= $project ? htmlspecialchars($project->getDescription()) : 'Description' ?></textarea>
+        </label>
 
-    <p>Image:</p>
-    <?php if ($project && $project->getImage()): ?>
-        <div class="edit-image-container">
-            <img class="edit-image" src="<?= htmlspecialchars($project->getImage()) ?>" alt="Project Image">
+        <?php if ($project && $project->getImage()): ?>
+            <div class="edit-image-container">
+                <img class="edit-image" src="<?= htmlspecialchars($project->getImage()) ?>" alt="Project Image">
+            </div>
+        <?php endif; ?>
+        <label>
+            <input type="file" name="image">
+        </label>
+
+        <div class="skills-container">
+            <?php
+            $selectedSkills = $project && is_array($project->getSkills()) ? $project->getSkills() : [];
+            $allSkills = ['HTML', 'CSS', 'JavaScript', 'PHP', 'Java', 'Laravel'];
+
+            foreach ($allSkills as $skill):
+                $isChecked = in_array($skill, $selectedSkills) ? 'checked' : '';
+                ?>
+                <label class="skill">
+                    <input type="checkbox" name="skills[]" value="<?= $skill ?>" <?= $isChecked ?>>
+                    <span><?= $skill ?></span>
+                </label>
+            <?php endforeach; ?>
         </div>
-        <p>Upload a new image to replace:</p>
-    <?php endif; ?>
-    <label>
-        <input type="file" name="image">
-    </label>
 
-    <p>Skills:</p>
-    <?php
-    $selectedSkills = $project && is_array($project->getSkills()) ? $project->getSkills() : [];
-    $allSkills = ['HTML', 'CSS', 'JavaScript', 'PHP', 'Java', 'Laravel'];
-
-    foreach ($allSkills as $skill):
-        $isChecked = in_array($skill, $selectedSkills) ? 'checked' : '';
-        ?>
-        <label class="skill">
-            <input type="checkbox" name="skills[]" value="<?= $skill ?>" <?= $isChecked ?>>
-            <?= $skill ?>
-        </label><br>
-    <?php endforeach; ?>
-
-    <button type="submit" name="action" value="<?= $project ? 'edit' : 'create' ?>">
-        <?= $project ? 'Save changes' : 'Create project' ?>
-    </button>
+        <button class="create-button create-page" type="submit" name="action" value="<?= $project ? 'edit' : 'create' ?>">
+            <?= $project ? 'Save changes' : 'Create project' ?>
+        </button>
+    </div>
 </form>
