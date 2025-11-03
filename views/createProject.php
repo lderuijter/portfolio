@@ -1,5 +1,6 @@
 <?php
 
+use Controller\ProjectController;
 use Service\ProjectService;
 
 // Moet ingelogd zijn om deze pagina te kunnen bekijken
@@ -10,6 +11,7 @@ if (!AUTH->isLoggedIn()) {
 
 $errors = [];
 $projectService = ProjectService::getInstance();
+$projectController = ProjectController::getInstance();
 $project = null;
 
 if (isset($_GET['projectId'])) {
@@ -17,49 +19,8 @@ if (isset($_GET['projectId'])) {
     $project = $projectService->getProjectById($projectId);
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $action = $_POST['action'] ?? null;
-
-    try {
-        switch ($action) {
-            case 'create':
-                if (empty($_POST['title']) || empty($_POST['description'])) {
-                    $errors[] = 'Title and description are required!';
-                    break;
-                }
-
-                $newProject = $projectService->create($_POST);
-
-                if (empty($errors)) {
-                    $projectService->addProject($newProject);
-                    header('Location: projects');
-                    exit;
-                }
-                break;
-
-            case 'edit':
-                if (!isset($_POST['projectId'])) {
-                    $errors[] = 'Project ID is required for editing.';
-                    break;
-                }
-
-                $projectService->updateProject($_POST['projectId'], $_POST, $errors);
-
-                if (empty($errors)) {
-                    header('Location: projects');
-                    exit;
-                }
-                break;
-
-            default:
-                http_response_code(400);
-                echo "Invalid or missing action.";
-                exit;
-        }
-    } catch (Exception $e) {
-        $errors[] = $e->getMessage();
-    }
-}
+// Handeling van request naar logica
+$projectController->handleRequest($_POST, $errors);
 ?>
 
 <h1><?= $project ? 'Edit Project' : 'Create Project' ?></h1>

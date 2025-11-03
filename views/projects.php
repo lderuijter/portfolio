@@ -1,30 +1,14 @@
 <?php
 
+use Controller\ProjectController;
 use Service\ProjectService;
 
+$projectController = ProjectController::getInstance();
 $projectService = ProjectService::getInstance();
 $projects = $_SESSION['projects'] ?? [];
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $action = $_POST['action'] ?? null;
-    switch ($action) {
-        case 'create':
-            header("Location: createProject");
-            break;
-        case 'edit':
-            header("Location: createProject?projectId=" . $_POST['projectId']);
-            break;
-        case 'delete':
-            $projectService->deleteProject($_POST['projectId']);
-            header("Location: projects");
-            break;
-        default:
-            // onbekende actie handelen
-            http_response_code(400);
-            echo "Invalid or missing action.";
-            break;
-    }
-}
+// Handeling van request naar andere pagina's
+$projectController->handleRoutingRequest($_POST);
 ?>
 
 <h1>Projects page</h1>
