@@ -18,6 +18,7 @@ body.dark {
     --navbar-color: hsl(0, 0%, 20%);
     --text: hsl(0 0% 95%);
     --text-muted: hsl(0 0% 70%);
+    --button-text: hsl(0 0% 95%);
     --button-color: hsl(0, 58%, 51%);
     --subtle-color: #FF7070;
 }
@@ -30,6 +31,7 @@ body.light {
     --navbar-color: hsl(0, 0%, 75%);
     --text: hsl(0 0% 5%);
     --text-muted: hsl(0 0% 30%);
+    --button-text: hsl(0 0% 95%);
     --button-color: hsl(211, 92%, 56%);
     --subtle-color: #73B3F8;
 }

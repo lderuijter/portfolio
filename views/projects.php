@@ -76,10 +76,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <input name="projectId" type="hidden" value="<?= htmlspecialchars($project->getId()) ?>">
                             <div class="admin-buttons">
                                 <button name="action" type="submit" class="edit-button" value="edit">
-                                    <i class="fa-solid fa-pen-to-square"></i>
+                                    <i class="fa-solid fa-pen-to-square button-icon"></i>
                                 </button>
                                 <button name="action" type="submit" class="delete-button" value="delete">
-                                    <i class="fa-solid fa-trash"></i>
+                                    <i class="fa-solid fa-trash button-icon"></i>
                                 </button>
                             </div>
                         </form>

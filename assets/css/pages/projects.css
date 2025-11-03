@@ -18,6 +18,8 @@
     word-wrap: break-word;
 }
 
+.project:last-child { margin-bottom: 20px; }
+
 .project-image {
     width: 250px;
     height: 250px;
@@ -69,8 +71,9 @@
 .project-skill-container.columns-2 { grid-template-columns: repeat(2, 1fr); }
 
 .project-skill {
-    background-color: var(--button-color);
-    color: var(--text);
+    background-color: var(--subtle-color);
+    color: var(--button-text);
+    font-weight: bold;
     padding: 10px;
     border-radius: 15px;
     font-size: 14px;
@@ -99,10 +102,14 @@
 
 .create-button {
     background-color: #52D078;
-    margin-bottom: 20px;
+    margin-bottom: 40px; /* 20 van padding project en 20 van margin bottom op laatste project */
+    color: var(--button-text);
+    font-family: sans-serif;
 }
+
 .edit-button { background-color: #FFC570; }
 .delete-button { background-color: #FF7070; }
+.button-icon { color: var(--button-text); }
 
 /* Responsive */
 @media (max-width: 992px) {
