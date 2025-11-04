@@ -16,7 +16,7 @@
                     </div>
                 <?php endif; ?>
                 <label>
-                    <input class="password-input" type="password" name="password" placeholder="Enter your password"
+                    <input class="password-input" type="password" name="password" placeholder="Password"
                            required>
                     <button class="toggle-password" type="button">
                         <i class="fa fa-eye"></i>

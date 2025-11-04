@@ -51,3 +51,13 @@
 .logout-button {
     background-color: #FF7070;
 }
+
+@media (max-width: 692px) {
+    .password-input {
+        width: 150px;
+    }
+    .main-login-container {
+        margin-top: 10px;
+        height: 100%;
+    }
+}
