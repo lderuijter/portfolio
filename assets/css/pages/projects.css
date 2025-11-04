@@ -61,7 +61,6 @@
 .project-skill-container {
     display: grid;
     gap: 10px;
-    width: 75%;
     min-height: 90px;
     align-items: center;
     justify-items: center;
