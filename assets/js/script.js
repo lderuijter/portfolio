@@ -31,3 +31,23 @@ burger.addEventListener('click', () => {
     // Laat de navigatie links zien of verbergen
     navLinks.classList.toggle('show');
 });
+
+// Haal de password input op via de class
+const passwordInput = document.querySelector('.password-input');
+// Haal de toggle button op via de class
+const toggleButton = document.querySelector('.toggle-password');
+
+// Luisteren voor clicks op de toggle button
+toggleButton.addEventListener('click', () => {
+    // isPassword ophalen door middel van boolean operator
+    const isPassword = passwordInput.type === 'password';
+    // Verander het type van de passwordInput naar text of password
+    passwordInput.type = isPassword ? 'text' : 'password';
+    // Haal de icon van de toggle button op via de class
+    const icon = document.querySelector('.toggle-password i');
+    /* Verander de icon van de toggle button naar
+    eye (je kan het wachtwoord zien)
+    of eye slash (je kan het wachtwoord niet zien) */
+    icon.classList.toggle('fa-eye', !isPassword);
+    icon.classList.toggle('fa-eye-slash', isPassword);
+});

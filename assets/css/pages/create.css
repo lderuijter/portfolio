@@ -3,7 +3,7 @@
     width: min(85%, 450px);
 }
 
-.create-form-container {
+.create-inputs-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -22,14 +22,14 @@
     margin-bottom: 10px;
 }
 
-.title-input, .create-form-container textarea {
+.title-input, .create-inputs-container textarea {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-bottom: 10px;
 }
 
-.create-form-container textarea {
+.create-inputs-container textarea {
     resize: none;
 }
 
@@ -86,5 +86,7 @@
 }
 
 .create-errors p {
+    font-family: sans-serif;
+    text-align: center;
     color: red;
 }

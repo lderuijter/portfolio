@@ -6,24 +6,34 @@
     <h1>Logout</h1>
 <?php endif; ?>
 
-<?php if (isset($_GET['error'])): ?>
-    <div class="incorrect-password">
-        <p>Incorrect password!</p>
-    </div>
-<?php endif; ?>
-<?php if (!AUTH->isLoggedIn()): ?>
-    <form method="post">
-        <label for="password">
-            <input id="password" type="password" name="password" placeholder="Password" required>
-        </label>
-        <button name="action" type="submit" value="login">
-            Login
-        </button>
-    </form>
-<?php else: ?>
-    <form method="post">
-        <button name="action" type="submit" value="logout">
-            Logout
-        </button>
-    </form>
-<?php endif; ?>
+<div class="main-login-container">
+    <?php if (!AUTH->isLoggedIn()): ?>
+        <form method="post">
+            <div class="login-logout-container">
+                <?php if (isset($_GET['error'])): ?>
+                    <div class="incorrect-password">
+                        <p>Incorrect password!</p>
+                    </div>
+                <?php endif; ?>
+                <label>
+                    <input class="password-input" type="password" name="password" placeholder="Enter your password"
+                           required>
+                    <button class="toggle-password" type="button">
+                        <i class="fa fa-eye"></i>
+                    </button>
+                </label>
+                <button class="login-button" name="action" type="submit" value="login">
+                    Login
+                </button>
+            </div>
+        </form>
+    <?php else: ?>
+        <form method="post">
+            <div class="login-logout-container">
+                <button class="logout-button" name="action" type="submit" value="logout">
+                    Logout
+                </button>
+            </div>
+        </form>
+    <?php endif; ?>
+</div>

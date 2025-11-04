@@ -1,3 +1,59 @@
+.main-login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+.login-logout-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    justify-items: center;
+    align-items: center;
+    background-color: var(--bg-light);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.login-button, .logout-button, .toggle-password {
+    border: none;
+    width: 100px;
+    padding: 10px;
+    text-align: center;
+    border-radius: 15px;
+    font-weight: bold;
+    font-family: sans-serif;
+    cursor: pointer;
+    color: var(--button-text);
+}
+
+.toggle-password {
+    background-color: var(--subtle-color);
+    width: 50px;
+}
+
+.password-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.login-button {
+    background-color: #52D078;
+}
+
+.logout-button {
+    background-color: #FF7070;
+}
+
 .incorrect-password p {
+    font-family: sans-serif;
+    text-align: center;
     color: red;
 }
