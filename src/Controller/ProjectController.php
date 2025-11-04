@@ -54,7 +54,7 @@ class ProjectController
             // Actie afhandelen via aparte functies met logica
             match ($action) {
                 'create' => $this->handleCreate($formData, $errors),
-                'edit'   => $this->handleEdit($formData, $errors),
+                'edit'   => $this->handleEdit($action, $formData, $errors),
                 default  => $this->badRequest('Ongeldige of ontbrekende actie.'),
             };
         } catch (Exception $e) {
@@ -111,25 +111,32 @@ class ProjectController
     }
 
     // Verwerkt het bewerken van een bestaand project
-    private function handleEdit(array $formData, array &$errors): void
+    private function handleEdit(string $action, array $formData, array &$errors): void
     {
-        $this->validateInputs($formData, $errors);
+        $projectId = $formData['projectId'] ?? null;
 
-        $this->projectService->updateProject($formData['projectId'], $formData, $errors);
+        $this->validateInputs($formData, $errors, $projectId, $action);
+
+        // Als er fouten zijn dan return (zodat er niks wordt aangepast als de titel en beschrijving leeg zijn)
+        if (!empty($errors)) {
+            return;
+        }
+
+        $this->projectService->updateProject($projectId, $formData, $errors);
 
         if (empty($errors)) {
             $this->redirect('projects');
         }
     }
 
-    private function validateInputs(array $formData, array &$errors): void
+    private function validateInputs(array $formData, array &$errors, ?string $projectId = null, ?string $action = null): void
     {
         // Vereiste velden checken
         if (empty($formData['title']) || empty($formData['description'])) {
             $errors[] = 'Titel en beschrijving zijn verplicht!';
         }
 
-        if (empty($formData['projectId'])) {
+        if ($action === 'edit' && empty($projectId)) {
             $errors[] = 'Project ID is verplicht bij bewerken!';
         }
     }
