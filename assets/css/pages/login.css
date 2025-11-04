@@ -51,9 +51,3 @@
 .logout-button {
     background-color: #FF7070;
 }
-
-.incorrect-password p {
-    font-family: sans-serif;
-    text-align: center;
-    color: red;
-}

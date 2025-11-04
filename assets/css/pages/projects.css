@@ -119,9 +119,3 @@
 @media (max-width: 692px) {
     .project-container[class*="columns-"] { grid-template-columns: 1fr; }
 }
-
-.no-content p {
-    font-family: sans-serif;
-    text-align: center;
-    color: red;
-}

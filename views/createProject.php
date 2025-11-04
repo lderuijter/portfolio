@@ -31,15 +31,15 @@ $projectController->handleRequest($_POST, $errors);
 
 <h1><?= $project ? 'Edit Project' : 'Create Project' ?></h1>
 
-<?php if (!empty($errors)): ?>
-    <div class="create-errors">
-        <?php foreach ($errors as $error): ?>
-            <p><?= htmlspecialchars($error) ?></p>
-        <?php endforeach; ?>
-    </div>
-<?php endif; ?>
 <form class="create-form-element" method="post" enctype="multipart/form-data">
     <div class="create-inputs-container">
+        <?php if (!empty($errors)): ?>
+            <div class="errors">
+                <?php foreach ($errors as $error): ?>
+                    <p><?= htmlspecialchars($error) ?></p>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
         <?php if ($project): ?>
             <input type="hidden" name="projectId" value="<?= htmlspecialchars($project->getId()) ?>">
         <?php endif; ?>

@@ -11,7 +11,7 @@
         <form method="post">
             <div class="login-logout-container">
                 <?php if (isset($_GET['error'])): ?>
-                    <div class="incorrect-password">
+                    <div class="errors">
                         <p>Incorrect password!</p>
                     </div>
                 <?php endif; ?>

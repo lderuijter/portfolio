@@ -57,3 +57,10 @@ main h1 {
     font-size: 34px;
     padding: 20px;
 }
+
+.errors p {
+    font-family: sans-serif;
+    text-align: center;
+    color: red;
+    margin-bottom: 10px;
+}

@@ -14,7 +14,7 @@ $projectController->handleRoutingRequest($_POST);
 <h1>Projects page</h1>
 
 <?php if (empty($projects)): ?>
-    <div class="no-content">
+    <div class="errors">
         <p>No projects found!</p>
     </div>
 <?php endif; ?>

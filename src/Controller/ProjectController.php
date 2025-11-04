@@ -91,7 +91,7 @@ class ProjectController
     }
 
     // Verwijdert een project en redirect naar overzicht
-    private function handleDelete(int|string $projectId): void
+    private function handleDelete(?string $projectId): void
     {
         $this->projectService->deleteProject($projectId);
         $this->redirect('projects');
@@ -100,11 +100,7 @@ class ProjectController
     // Verwerkt het aanmaken van een nieuw project
     private function handleCreate(array $formData, array &$errors): void
     {
-        // Vereiste velden checken
-        if (empty($formData['title']) || empty($formData['description'])) {
-            $errors[] = 'Titel en beschrijving zijn verplicht!';
-            return;
-        }
+        $this->validateInputs($formData, $errors);
 
         $newProject = $this->projectService->create($formData);
 
@@ -117,15 +113,24 @@ class ProjectController
     // Verwerkt het bewerken van een bestaand project
     private function handleEdit(array $formData, array &$errors): void
     {
-        if (empty($formData['projectId'])) {
-            $errors[] = 'Project ID is verplicht bij bewerken.';
-            return;
-        }
+        $this->validateInputs($formData, $errors);
 
         $this->projectService->updateProject($formData['projectId'], $formData, $errors);
 
         if (empty($errors)) {
             $this->redirect('projects');
+        }
+    }
+
+    private function validateInputs(array $formData, array &$errors): void
+    {
+        // Vereiste velden checken
+        if (empty($formData['title']) || empty($formData['description'])) {
+            $errors[] = 'Titel en beschrijving zijn verplicht!';
+        }
+
+        if (empty($formData['projectId'])) {
+            $errors[] = 'Project ID is verplicht bij bewerken!';
         }
     }
 }
