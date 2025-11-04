@@ -1,21 +1,4 @@
-<?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $action = $_POST['action'] ?? null;
-    switch ($action) {
-        case 'login':
-            AUTH->login();
-            break;
-        case 'logout':
-            AUTH->logout();
-            break;
-        default:
-            // onbekende actie handelen
-            http_response_code(400);
-            echo "Invalid or missing action.";
-            break;
-    }
-}
-?>
+<?php AUTH->handleRequest($_POST); ?>
 
 <?php if (!AUTH->isLoggedIn()): ?>
     <h1>Login</h1>
