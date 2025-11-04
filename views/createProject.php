@@ -14,8 +14,14 @@ $projectService = ProjectService::getInstance();
 $projectController = ProjectController::getInstance();
 $project = null;
 
-if (isset($_GET['projectId'])) {
-    $projectId = $_GET['projectId'];
+/**
+ * Ophalen project.
+ * - Als er een projectId in de url is, haal deze dan op en zet deze in de $project variabele, anders is de variabele null.
+ * - Als de variabele null is, dan wordt de if statement false.
+ * - Als er wel een waarde is in de variabele dan wordt de if statement true.
+ */
+if ($projectId = $_GET['projectId'] ?? null) {
+    // Haal het project op met de $projectId
     $project = $projectService->getProjectById($projectId);
 }
 
@@ -46,7 +52,7 @@ $projectController->handleRequest($_POST, $errors);
 
         <p class="description-hint">Description: </p>
         <label>
-            <textarea cols="30" rows="15" name="description" required><?= $project ? htmlspecialchars($project->getDescription()) : 'Description' ?></textarea>
+            <textarea cols="30" rows="15" name="description" required><?= $project ? htmlspecialchars($project->getDescription()) : '' ?></textarea>
         </label>
 
         <?php if ($project && $project->getImage()): ?>

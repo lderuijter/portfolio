@@ -8,4 +8,5 @@
     color: var(--white-text);
     font-size: 14px;
     border-top-left-radius: 8px;
+    cursor: pointer;
 }

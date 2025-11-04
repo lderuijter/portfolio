@@ -45,10 +45,10 @@ class AuthController
 
         if (!empty($password) && $this->authService->verify_password($password)) {
             $_SESSION['logged_in'] = true;
-            header("Location: projects");
+            $this->redirect('projects');
         } else {
             $_SESSION['logged_in'] = false;
-            header("Location: login?error=1");
+            $this->redirect('login?error=1');
         }
     }
 
@@ -63,6 +63,12 @@ class AuthController
     private function isPostRequest(): bool
     {
         return $_SERVER['REQUEST_METHOD'] === 'POST';
+    }
+
+    // Stuurt door naar een andere pagina
+    private function redirect(string $url): void
+    {
+        header("Location: $url");
     }
 
     // Geeft een foutmelding bij een ongeldige actie

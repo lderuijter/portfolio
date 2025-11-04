@@ -1,6 +1,6 @@
 .create-form-element {
     /* minimaal 85% van de breedte van de viewport, maar maximaal 520px */
-    width: min(85%, 520px);
+    width: min(85%, 450px);
 }
 
 .create-form-container {
