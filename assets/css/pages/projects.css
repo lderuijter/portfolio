@@ -48,6 +48,18 @@
 }
 .project-description { font-size: 18px; }
 
+.description-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.description-text.expanded {
+    -webkit-line-clamp: none;
+}
+
 /* Skills en admin-buttons naast elkaar */
 .project-actions {
     display: flex;
@@ -88,10 +100,10 @@
     align-items: end;
 }
 
-.admin-buttons button, .create-button {
+.admin-buttons button, .create-button, .toggle-text {
     padding: 10px 15px;
     font-size: 16px;
-    font-family: 'Lobster Two', sans-serif;
+    font-family: sans-serif;
     color: var(--text);
     border: none;
     border-radius: 8px;
@@ -99,11 +111,17 @@
     width: fit-content;
 }
 
+.toggle-text {
+    font-family: 'Lobster Two', sans-serif;
+    color: var(--button-text);
+    background-color: var(--button-color);
+    margin-top: 10px;
+}
+
 .create-button {
     background-color: #52D078;
     margin-bottom: 40px; /* 20 van padding project en 20 van margin bottom op laatste project */
     color: var(--button-text);
-    font-family: sans-serif;
 }
 
 .edit-button { background-color: #FFC570; }

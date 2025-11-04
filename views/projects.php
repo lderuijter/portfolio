@@ -39,7 +39,8 @@ $projectController->handleRoutingRequest($_POST);
                     <h2><?= htmlspecialchars($project->getTitle()) ?></h2>
                 </div>
                 <div class="project-description">
-                    <p><?= htmlspecialchars($project->getDescription()) ?></p>
+                    <p class="description-text"><?= htmlspecialchars($project->getDescription()) ?></p>
+                    <button class="toggle-text">Lees meer</button>
                 </div>
                 <div class="project-actions">
                     <?php $skillCount = min(2, count($project->getSkills() ?? [])); ?>
