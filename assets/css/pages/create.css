@@ -1,5 +1,6 @@
-.create-errors p {
-    color: red;
+.create-form-element {
+    /* minimaal 85% van de breedte van de viewport, maar maximaal 520px */
+    width: min(85%, 520px);
 }
 
 .create-form-container {
@@ -47,13 +48,12 @@
 }
 
 .skills-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, auto);
+    display: flex;
+    flex-wrap: wrap;
     gap: 15px;
     max-width: 500px;
-    margin: 20px auto auto;
-    justify-items: center;
+    margin-top: 20px;
+    justify-content: center;
     align-items: center;
 }
 
@@ -71,6 +71,7 @@
     font-family: sans-serif;
     cursor: pointer;
     background-color: var(--subtle-color);
+    color: var(--button-text);
     transition: background-color 0.3s, color 0.3s;
 }
 
@@ -82,4 +83,8 @@
 .create-button.create-page {
     margin-top: 20px;
     margin-bottom: 0;
+}
+
+.create-errors p {
+    color: red;
 }

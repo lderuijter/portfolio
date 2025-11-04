@@ -32,7 +32,7 @@ $projectController->handleRequest($_POST, $errors);
         <?php endforeach; ?>
     </div>
 <?php endif; ?>
-<form method="post" enctype="multipart/form-data">
+<form class="create-form-element" method="post" enctype="multipart/form-data">
     <div class="create-form-container">
         <?php if ($project): ?>
             <input type="hidden" name="projectId" value="<?= htmlspecialchars($project->getId()) ?>">
