@@ -8,12 +8,21 @@ use Service\AuthService;
 class AuthController
 {
     use SingletonTrait;
+
+    private AuthService $authService;
+
+    public function __construct()
+    {
+        // AuthService singleton ophalen
+        $this->authService = AuthService::getInstance();
+    }
+
     // functie die het ingevoerde wachtwoord ophaalt en dit naar de verify_password functie stuurt
     public function login(): void
     {
         $password = $_POST['password'] ?? '';
 
-        if (!empty($password) && AuthService::verify_password($password)) {
+        if (!empty($password) && $this->authService->verify_password($password)) {
             $_SESSION['logged_in'] = true;
             header("Location: projects");
         } else {
