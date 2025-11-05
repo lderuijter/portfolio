@@ -65,4 +65,7 @@
     .inputs-container.contact-page {
         padding: 20px;
     }
+    .message-input {
+        width: 240px;
+    }
 }
