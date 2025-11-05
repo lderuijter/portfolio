@@ -11,7 +11,7 @@ $projects = $_SESSION['projects'] ?? [];
 $projectController->handleRoutingRequest($_POST);
 ?>
 
-<h1>Projects page</h1>
+<h1>Projects</h1>
 
 <?php if (empty($projects)): ?>
     <div class="errors">

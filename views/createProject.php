@@ -31,8 +31,8 @@ $projectController->handleRequest($_POST, $errors);
 
 <h1><?= $project ? 'Edit Project' : 'Create Project' ?></h1>
 
-<form class="create-form-element" method="post" enctype="multipart/form-data">
-    <div class="create-inputs-container">
+<form class="form-element" method="post" enctype="multipart/form-data">
+    <div class="inputs-container">
         <?php if (!empty($errors)): ?>
             <div class="errors">
                 <?php foreach ($errors as $error): ?>
@@ -52,7 +52,7 @@ $projectController->handleRequest($_POST, $errors);
 
         <p class="description-hint">Description: </p>
         <label>
-            <textarea cols="30" rows="15" name="description" required><?= $project ? htmlspecialchars($project->getDescription()) : '' ?></textarea>
+            <textarea cols="30" rows="15" name="description" placeholder="Description" required><?= $project ? htmlspecialchars($project->getDescription()) : '' ?></textarea>
         </label>
 
         <?php if ($project && $project->getImage()): ?>

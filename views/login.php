@@ -6,7 +6,7 @@
     <h1>Logout</h1>
 <?php endif; ?>
 
-<div class="main-login-container">
+<div class="main-form-container">
     <?php if (!AUTH->isLoggedIn()): ?>
         <form method="post">
             <div class="login-logout-container">

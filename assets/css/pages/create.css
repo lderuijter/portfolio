@@ -1,9 +1,9 @@
-.create-form-element {
+.form-element {
     /* minimaal 85% van de breedte van de viewport, maar maximaal 520px */
     width: min(85%, 450px);
 }
 
-.create-inputs-container {
+.inputs-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -22,14 +22,14 @@
     margin-bottom: 10px;
 }
 
-.title-input, .create-inputs-container textarea {
+.title-input, .inputs-container textarea {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-bottom: 10px;
 }
 
-.create-inputs-container textarea {
+.inputs-container textarea {
     resize: none;
 }
 

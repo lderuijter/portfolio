@@ -1,3 +1,8 @@
+// dit zorgt ervoor dat je niet opnieuw het formulier verstuurd bij elke refresh
+if (window.history.replaceState) {
+    window.history.replaceState(null, null, window.location.href);
+}
+
 // Haal de theme toggle op door de class van de checkbox element aan te roepen
 const themeToggle = document.querySelector('.theme-toggle');
 

@@ -1,4 +1,4 @@
-<h1 class="page-heading">Home page</h1>
+<h1 class="page-heading">Home</h1>
 
 <div class="about-me-container">
     <div class="lucas-image-container">
