@@ -38,17 +38,17 @@ class ContactFormValidator
             return;
         }
 
-//        // Beperk het verzenden van het formulier tot 1 keer per uur
-//        $cooldown = 3600; // 1 uur = 3600 seconden
-//        $lastSubmit = $_SESSION['last_form_submit'] ?? 0;
-//        $now = time();
-//
-//        // Controleer of de gebruiker te snel opnieuw probeert te verzenden
-//        if ($now - $lastSubmit < $cooldown) {
-//            $remaining = ceil(($cooldown - ($now - $lastSubmit)) / 60);
-//            $errors[] = "Je kunt slechts één bericht per uur verzenden. Probeer het over {$remaining} minuten opnieuw.";
-//            return;
-//        }
+        // Beperk het verzenden van het formulier tot 1 keer per uur
+        $cooldown = 3600; // 1 uur = 3600 seconden
+        $lastSubmit = $_SESSION['last_form_submit'] ?? 0;
+        $now = time();
+
+        // Controleer of de gebruiker te snel opnieuw probeert te verzenden
+        if ($now - $lastSubmit < $cooldown) {
+            $remaining = ceil(($cooldown - ($now - $lastSubmit)) / 60);
+            $errors[] = "Je kunt slechts één bericht per uur verzenden. Probeer het over {$remaining} minuten opnieuw.";
+            return;
+        }
 
         // Controleer of alle verplichte velden ingevuld zijn
         foreach ($this->requiredFields as $field => $errorMessage) {
@@ -57,10 +57,10 @@ class ContactFormValidator
             }
         }
 
-//        // Als er geen fouten zijn, sla het tijdstip van verzenden op in de sessie
-//        if (empty($errors)) {
-//            $_SESSION['last_form_submit'] = $now;
-//        }
+        // Als er geen fouten zijn, sla het tijdstip van verzenden op in de sessie
+        if (empty($errors)) {
+            $_SESSION['last_form_submit'] = $now;
+        }
     }
 
     /**
