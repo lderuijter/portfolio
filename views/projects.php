@@ -18,6 +18,7 @@ $projectController->handleRoutingRequest($_POST);
 // -----------------------------
 function renderProjectGroups(array $projectGroups, ProjectController $projectController): void
 {
+    // Controleer of er projectgroepen zijn
     if (!$projectGroups) {
         return;
     }
