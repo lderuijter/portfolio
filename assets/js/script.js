@@ -37,18 +37,40 @@ burger.addEventListener('click', () => {
     navLinks.classList.toggle('show');
 });
 
-const descriptionTextContainer = document.querySelectorAll('.project-description');
-
-if (descriptionTextContainer) {
+// Luisteren voor clicks op de toggle button wanneer de pagina is geladen anders is de button niet beschikbaar
+document.addEventListener('DOMContentLoaded', () => {
+    // Haal de description text container op via de class
+    const descriptionTextContainer = document.querySelectorAll('.project-description');
+    // Als de description text container niet is gevonden, log het naar de console
+    if (descriptionTextContainer.length === 0) {
+        console.error('Description text container not found!');
+    }
+    // for each nodig omdat er meerdere projecten zijn
     descriptionTextContainer.forEach(container => {
+        // Haal de toggle text button en de (full en short) description text op via de class
         const toggleTextButton = container.querySelector('.toggle-text');
         const descriptionText = container.querySelector('.description-text');
+        const fullDescriptionText = container.querySelector('.full-description');
+        const shortDescriptionText = container.querySelector('.short-description');
+
+        // Als de toggle button niet is gevonden, log het naar de console
+        if (!toggleTextButton) {
+            console.warn('Toggle text button not found in one container. Skipping.');
+            return;
+        }
+        // Luisteren voor clicks op de toggle button
         toggleTextButton.addEventListener('click', () => {
+            // Verander de class van de description text container naar expanded of niet
             descriptionText.classList.toggle('expanded');
+            // Verander de class van de full description text container naar expanded of niet
+            fullDescriptionText.classList.toggle('expanded');
+            // Verander de class van de short description text container naar expanded of niet
+            shortDescriptionText.classList.toggle('expanded');
+            // Verander de tekst van de toggle button naar Lees minder of Lees meer
             toggleTextButton.textContent = descriptionText.classList.contains('expanded') ? 'Lees minder' : 'Lees meer';
         });
     })
-}
+})
 
 // Haal de toggle button op via de class
 const toggleButton = document.querySelector('.toggle-password');

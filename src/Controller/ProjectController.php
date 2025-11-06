@@ -63,6 +63,26 @@ class ProjectController
         }
     }
 
+    // ====== Public Helpers ======
+
+    // Maak de beschrijving korter en stop alleen op een woord (maximaal 100 karakters)
+    public function truncateOnWord($text, $maxLength = 100) {
+        if (strlen($text) <= $maxLength) {
+            return $text;
+        }
+
+        // Knip de tekst af op $maxLength
+        $truncated = substr($text, 0, $maxLength);
+
+        // Zorg dat we niet midden in een woord eindigen
+        $lastSpace = strrpos($truncated, ' ');
+        if ($lastSpace !== false) {
+            $truncated = substr($truncated, 0, $lastSpace);
+        }
+
+        return $truncated;
+    }
+
     // ====== Private Helpers ======
 
     // Controleert of het een POST-request is

@@ -61,6 +61,26 @@
     -webkit-line-clamp: none;
 }
 
+/* Full description eerst hidden (default) */
+.full-description {
+    display: none;
+}
+
+/* Full description pas laten zien als er op de knop 'Lees meer' wordt geklikt */
+.full-description.expanded {
+    display: block;
+}
+
+/* Short description altijd laten zien (default) */
+.short-description {
+    display: block;
+}
+
+/* Short description hidden als full description is geopend */
+.short-description.expanded {
+    display: none;
+}
+
 /* Skills en admin-buttons naast elkaar */
 .project-actions {
     display: flex;

@@ -64,10 +64,24 @@ $projectGroups = array_chunk($projects, 3);
                         <h2><?= htmlspecialchars($project->getTitle()) ?></h2>
                     </div>
 
-                    <!-- Beschrijving met lees meer knop -->
+                    <!-- Beschrijving met 'Lees meer' knop -->
                     <div class="project-description">
-                        <p class="description-text"><?= htmlspecialchars($project->getDescription()) ?></p>
-                        <button class="toggle-text">Lees meer</button>
+                        <?php
+                        // Truncate de beschrijving op een bepaalde lengte
+                        $fullDescription = $project->getDescription();
+                        $maxLength = 100;
+                        $shortDescription = $projectController->truncateOnWord($fullDescription, $maxLength); ?>
+                        <div class="description-text">
+                            <span class="short-description">
+                                <?= htmlspecialchars($shortDescription) ?>
+                            </span>
+                            <span class="full-description">
+                                <?= htmlspecialchars($fullDescription) ?>
+                            </span>
+                        </div>
+                        <?php if (strlen($fullDescription) > $maxLength): ?>
+                            <button class="toggle-text">Lees meer</button>
+                        <?php endif; ?>
                     </div>
 
                     <!-- Container voor skills + admin knoppen -->
