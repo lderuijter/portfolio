@@ -16,8 +16,12 @@ $projectController->handleRoutingRequest($_POST);
 // -----------------------------
 // Functie om projectgroepen te renderen
 // -----------------------------
-function renderProjectGroups(array $projectGroups, $projectController): void
+function renderProjectGroups(array $projectGroups, ProjectController $projectController): void
 {
+    if (!$projectGroups) {
+        return;
+    }
+
     foreach ($projectGroups as $group):
         // Tel hoeveel projecten er in deze specifieke groep zitten (altijd 1, 2 of 3 hoeveel groepen er ook zijn)
         $count = count($group);
