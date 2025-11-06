@@ -73,10 +73,10 @@ $projectGroups = array_chunk($projects, 3);
                         $shortDescription = $projectController->truncateOnWord($fullDescription, $maxLength); ?>
                         <div class="description-text">
                             <span class="short-description">
-                                <?= htmlspecialchars($shortDescription) ?>
+                                <?= nl2br(htmlspecialchars($shortDescription)) ?>
                             </span>
                             <span class="full-description">
-                                <?= htmlspecialchars($fullDescription) ?>
+                                <?= nl2br(htmlspecialchars($fullDescription)) ?>
                             </span>
                         </div>
                         <?php if (strlen($fullDescription) > $maxLength): ?>
