@@ -1,7 +1,8 @@
 .project-container {
     display: grid;
+    justify-content: center;
+    align-items: center;
     gap: 50px;
-    justify-items: center;
 }
 
 .project-container.columns-1 { grid-template-columns: 1fr; }
