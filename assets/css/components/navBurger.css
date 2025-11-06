@@ -90,6 +90,8 @@
     color: var(--text);
     text-decoration: none;
     display: inline-block;
+    width: 80px;
+    text-align: center;
 }
 
 /* onderlijn styling en animatie */
