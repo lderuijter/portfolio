@@ -1,6 +1,6 @@
 .project-container {
     display: grid;
-    justify-content: center;
+    justify-items: center;
     align-items: center;
     gap: 50px;
 }
@@ -150,11 +150,19 @@
 .delete-button { background-color: #FF7070; }
 .button-icon { color: var(--button-text); }
 
+.tablet {
+    display: none;
+}
+
 /* Responsive */
 @media (max-width: 992px) {
     .project-container[class*="columns-"] { grid-template-columns: repeat(2, 1fr); }
+    .tablet { display: block; }
+    .desktop { display: none; }
 }
 
 @media (max-width: 692px) {
     .project-container[class*="columns-"] { grid-template-columns: 1fr; }
+    .desktop { display: block; }
+    .tablet { display: none; }
 }
