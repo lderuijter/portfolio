@@ -50,6 +50,9 @@ $_SESSION['theme'] = $theme;
     <!-- Daarna de pagina's -->
     <?php load_css_folder('assets/css/pages'); ?>
 
+    <!-- Logo favicon -->
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+
     <!-- Google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
