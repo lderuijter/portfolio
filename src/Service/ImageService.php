@@ -63,7 +63,10 @@ class ImageService
         $targetPath = $this->uploadDir . $fileName;
 
         // Verplaats het uploadbestand van de tijdelijke map naar de uploads-map
-        move_uploaded_file($file['tmp_name'], $targetPath);
+        if (!move_uploaded_file($file['tmp_name'], $targetPath)) {
+            // Als het uploaden mislukt geef dan een foutmelding terug
+            throw new Exception("Fout bij het uploaden van het bestand.");
+        }
 
         // Geef het relatieve pad terug
         return 'assets/uploads/' . $fileName;
