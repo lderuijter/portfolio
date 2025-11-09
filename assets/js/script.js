@@ -41,33 +41,48 @@ burger.addEventListener('click', () => {
 document.addEventListener('DOMContentLoaded', () => {
     // Haal de description text container op via de class
     const descriptionTextContainer = document.querySelectorAll('.project-description');
-    // Als de description text container niet is gevonden, log het naar de console
-    if (descriptionTextContainer.length === 0) {
-        console.error('Description text container not found!');
+
+    // Haal de benodigde elementen op via de class
+    const modal = document.querySelector('.full-description-modal');
+    const modalOverlay = document.querySelector('.modal-overlay');
+    const hideModal = document.querySelector('.hide-modal');
+    const projectDescription = document.querySelector('.full-description');
+
+    // Als een element niet is gevonden, return
+    if (!modal || !hideModal || !modalOverlay || !projectDescription) {
+        return;
     }
+
     // for each nodig omdat er meerdere projecten zijn
     descriptionTextContainer.forEach(container => {
-        // Haal de toggle text button en de (full en short) description text op via de class
+        // Haal de toggle text button op via de class
         const toggleTextButton = container.querySelector('.toggle-text');
-        const descriptionText = container.querySelector('.description-text');
-        const fullDescriptionText = container.querySelector('.full-description');
-        const shortDescriptionText = container.querySelector('.short-description');
+        // Haal text content op van het huidige project via de dataset
+        const textContent = container.dataset.description;
 
-        // Als de toggle button niet is gevonden, log het naar de console
-        if (!toggleTextButton) {
-            console.warn('Toggle text button not found in one container. Skipping.');
+        // Als een element niet is gevonden, return
+        if (!toggleTextButton || !textContent) {
             return;
         }
+
         // Luisteren voor clicks op de toggle button
         toggleTextButton.addEventListener('click', () => {
-            // Verander de class van de description text container naar expanded of niet
-            descriptionText.classList.toggle('expanded');
-            // Verander de class van de full description text container naar expanded of niet
-            fullDescriptionText.classList.toggle('expanded');
-            // Verander de class van de short description text container naar expanded of niet
-            shortDescriptionText.classList.toggle('expanded');
-            // Verander de tekst van de toggle button naar Lees minder of Lees meer
-            toggleTextButton.textContent = descriptionText.classList.contains('expanded') ? 'Lees minder' : 'Lees meer';
+            // Niet meer scrollen
+            document.body.style.overflow = "hidden";
+            // Laat de modal en modal overlay zien
+            modalOverlay.style.display = 'block';
+            modal.style.display = 'flex';
+            // Zorgen voor text van het huidige project
+            projectDescription.innerHTML = textContent;
+        });
+
+        // Luisteren voor clicks op de hide modal button
+        hideModal.addEventListener('click', () => {
+            // Wel weer scrollen
+            document.body.style.overflow = "";
+            // Verberg de modal en modal overlay
+            modalOverlay.style.display = 'none';
+            modal.style.display = 'none';
         });
     })
 })
@@ -76,16 +91,19 @@ document.addEventListener('DOMContentLoaded', () => {
 const toggleButton = document.querySelector('.toggle-password');
 
 if (toggleButton) {
+
     // Haal de password input op via de class
     const passwordInput = document.querySelector('.password-input');
     // Luisteren voor clicks op de toggle button
     toggleButton.addEventListener('click', () => {
+
         // isPassword ophalen door middel van boolean operator
         const isPassword = passwordInput.type === 'password';
         // Verander het type van de passwordInput naar text of password
         passwordInput.type = isPassword ? 'text' : 'password';
         // Haal de icon van de toggle button op via de class
         const icon = document.querySelector('.toggle-password i');
+
         /* Verander de icon van de toggle button naar
         eye (je kan het wachtwoord zien)
         of eye slash (je kan het wachtwoord niet zien) */

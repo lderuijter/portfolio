@@ -30,8 +30,12 @@ function renderProjectGroups(array $projectGroups, ProjectController $projectCon
         <div class="project-container columns-<?= $count ?>">
             <!-- Loop door elk project binnen deze groep -->
             <?php foreach ($group as $project): ?>
+                <div class="modal-overlay"></div>
+                <div class="full-description-modal">
+                    <span class="full-description"></span>
+                    <button class="hide-modal">Lees minder</button>
+                </div>
                 <div class="project">
-
                     <!-- Projectafbeelding -->
                     <?php if ($project->getImage()): ?>
                         <div class="project-image">
@@ -54,18 +58,16 @@ function renderProjectGroups(array $projectGroups, ProjectController $projectCon
                         </div>
 
                         <!-- Beschrijving met 'Lees meer' knop -->
-                        <div class="project-description">
+                        <div class="project-description" data-description="<?= nl2br(htmlspecialchars($project->getDescription())) ?>">
                             <?php
                             // Truncate de beschrijving op een bepaalde lengte
-                            $fullDescription = $project->getDescription();
                             $maxLength = 100;
-                            $shortDescription = $projectController->truncateOnWord($fullDescription, $maxLength);
+                            $shortDescription = $projectController->truncateOnWord($project->getDescription(), $maxLength);
                             ?>
                             <div class="description-text">
                                 <span class="short-description"><?= nl2br(htmlspecialchars($shortDescription)) ?></span>
-                                <span class="full-description"><?= nl2br(htmlspecialchars($fullDescription)) ?></span>
                             </div>
-                            <?php if (strlen($fullDescription) > $maxLength): ?>
+                            <?php if (strlen($project->getDescription()) > $maxLength): ?>
                                 <button class="toggle-text">Lees meer</button>
                             <?php endif; ?>
                         </div>
