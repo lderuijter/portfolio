@@ -68,10 +68,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Luisteren voor clicks op de toggle button
         toggleTextButton.addEventListener('click', () => {
             // Niet meer scrollen
-            document.body.style.overflow = "hidden";
-            // Laat de modal en modal overlay zien
-            modalOverlay.style.display = 'block';
-            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            // Modal laten zien
+            modal.classList.add('active');
+            modalOverlay.classList.add('active');
             // Zorgen voor text van het huidige project
             projectDescription.innerHTML = textContent;
         });
@@ -79,10 +79,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Luisteren voor clicks op de hide modal button
         hideModal.addEventListener('click', () => {
             // Wel weer scrollen
-            document.body.style.overflow = "";
-            // Verberg de modal en modal overlay
-            modalOverlay.style.display = 'none';
-            modal.style.display = 'none';
+            document.body.style.overflow = '';
+            // Modal verbergen
+            modal.classList.remove('active');
+            modalOverlay.classList.remove('active');
         });
     })
 })

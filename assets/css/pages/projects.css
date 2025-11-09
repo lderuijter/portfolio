@@ -63,14 +63,35 @@
     overflow-wrap: anywhere;
 }
 
-/* === Modal styling begin === */
+/* ======== Modal styling begin ======== */
+
+/* Modal animaties begin */
+
+.full-description-modal, .modal-overlay {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease-in-out;
+}
+
+.full-description-modal.active, .modal-overlay.active {
+    pointer-events: auto;
+}
+
+.full-description-modal.active {
+    opacity: 1;
+}
+
+.modal-overlay.active {
+    opacity: 0.8;
+}
+
+/* Modal animaties eind */
 
 .modal-overlay {
     background: var(--bg-dark);
     backdrop-filter: blur(5px);
-    opacity: 0.8;
     position: fixed;
-    display: none; /* Bij wel laten zien is dit block */
+    display: block;
     z-index: 5;
     inset: 0;
 }
@@ -78,11 +99,11 @@
 .full-description-modal {
     background-color: var(--bg-light);
     position: fixed;
-    display: none; /* Bij wel laten zien is dit flex */
+    z-index: 10;
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    z-index: 10;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -95,7 +116,7 @@
     text-align: center;
 }
 
-/* === Modal styling eind === */
+/* ======== Modal styling eind ======== */
 
 /* Skills en admin-buttons naast elkaar */
 .project-actions {
