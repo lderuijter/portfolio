@@ -86,7 +86,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 50vh;
+    width: min(90%, 50vh); /* gebruik 50vh anders 90% van het scherm */
     height: fit-content;
     overflow: auto;
     padding: 20px;
@@ -166,14 +166,13 @@
 .delete-button { background-color: #FF7070; }
 .button-icon { color: var(--button-text); }
 
-.tablet {
-    display: none;
-}
+.desktop { display: block; }
+.tablet { display: none; }
 
 /* Responsive */
 @media (max-width: 992px) {
-    .tablet { display: block; }
     .desktop { display: none; }
+    .tablet { display: block; }
 }
 
 @media (max-width: 692px) {

@@ -30,11 +30,6 @@ function renderProjectGroups(array $projectGroups, ProjectController $projectCon
         <div class="project-container columns-<?= $count ?>">
             <!-- Loop door elk project binnen deze groep -->
             <?php foreach ($group as $project): ?>
-                <div class="modal-overlay"></div>
-                <div class="full-description-modal">
-                    <span class="full-description"></span>
-                    <button class="hide-modal">Lees minder</button>
-                </div>
                 <div class="project">
                     <!-- Projectafbeelding -->
                     <?php if ($project->getImage()): ?>
@@ -156,3 +151,10 @@ $projectGroupsResponsive = array_chunk($projects, 2);
         </button>
     </form>
 <?php endif; ?>
+
+<!-- Modal voor de volledige beschrijving -->
+<div class="modal-overlay"></div>
+<div class="full-description-modal">
+    <span class="full-description"></span>
+    <button class="hide-modal">Lees minder</button>
+</div>
